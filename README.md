@@ -1,16 +1,7 @@
-# Acebook
-
-In this project, you are tasked with working on an existing application. A significant part of the challenge will be to familiarise yourself with the codebase you've inherited, as you work to **improve and extend** it.
-
-## Documentation
-
-[More documentation of the codebase and its architecture can be found here.](./DOCUMENTATION.md) It's recommended you all read this _after making sure the whole setup below worked for everyone_. Then work together on a diagram describing how the application works.
-
-[A template Miro board for your diagrams can be found here.](https://miro.com/app/board/uXjVPqNzFfc=/?share_link_id=360271550320) Make sure your validate your diagrams with your coach.
 
 ## Card wall
+https://trello.com/b/jioMjcB9/road-trip-planner
 
-REPLACE THIS TEXT WITH A LINK TO YOUR CARD WALL
 
 ## Quickstart
 
@@ -29,10 +20,7 @@ REPLACE THIS TEXT WITH A LINK TO YOUR CARD WALL
 
 ### Set up your project
 
-1. Fork this repository
-2. Rename your fork to `acebook-<team name>`
-3. Clone your fork to your local machine
-4. Install Node.js dependencies for both the `frontend` and `api` directories.
+5. Install Node.js dependencies for both the `frontend` and `api` directories.
    ```
    ; cd api
    ; npm install
@@ -42,14 +30,14 @@ REPLACE THIS TEXT WITH A LINK TO YOUR CARD WALL
 
 > You might get warning messages about the installed dependencies at this point. You can ignore them, as long as the installation process doesn't fail. If the setup fails at this point, don't wait for too long and reach out to your coach.
 
-5. Install an ESLint plugin for your editor. For example: [`linter-eslint`](https://github.com/AtomLinter/linter-eslint) for Atom.
-6. Install MongoDB
+6. Install an ESLint plugin for your editor. For example: [`linter-eslint`](https://github.com/AtomLinter/linter-eslint) for Atom.
+7. Install MongoDB
    ```
    brew tap mongodb/brew
    brew install mongodb-community@5.0
    ```
    *Note:* If you see a message that says `If you need to have mongodb-community@5.0 first in your PATH, run:`, follow the instruction. Restart your terminal after this.
-7. Start MongoDB
+8. Start MongoDB
    ```
    brew services start mongodb-community@5.0
    ```
@@ -76,8 +64,6 @@ REPLACE THIS TEXT WITH A LINK TO YOUR CARD WALL
 You should now be able to open your browser and go to `http://localhost:3000/signup` to create a new user.
 
 Then, after signing up, you should be able to log in by going to `http://localhost:3000/login`.
-
-After logging in, you won't see much but you can create posts using PostMan and they should then show up in the browser if you refresh the page.
 
 ### How to run automated tests
 
