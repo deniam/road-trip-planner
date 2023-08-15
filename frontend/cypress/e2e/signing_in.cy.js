@@ -10,7 +10,7 @@ describe("Signing in", () => {
     cy.get("#password").type("password");
     cy.get("#submit").click();
 
-    cy.url().should("include", "/posts");
+    cy.url().should("include", "/planner");
   });
 
   it("with missing password, redirects to '/login'", () => {

@@ -12,6 +12,8 @@ describe("Logging in", () => {
     cy.get("#submit").click();
     cy.wait('@loginRequest').then( interception => {
       expect(interception.response.body.token).to.eq("fakeToken")
+      expect(interception.request.body.email).to.eq("someone@example.com");
+      expect(interception.request.body.password).to.eq("password");
     })
   })
 })
