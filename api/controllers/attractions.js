@@ -7,16 +7,31 @@ const AttractionsController = {
   GetAttractions: async (req, res) => {
 
     try {
-      let locationsCoordinates = []
+      let coordinatesWithLabels = []
+      let coordinatesWithoutLabels = []
       const locations = Array.from(req.body)
 
+      // This takes search strings and returns coordinates of first matching result
       for (const location of locations) {
         const getCoordinate = await getLocationCoordinates(location);
+        coordinatesWithoutLabels.push(getCoordinate)
         const label = `${location}`;
-        locationsCoordinates.push({[label]: getCoordinate})
+        coordinatesWithLabels.push({ [label]: getCoordinate })
       }
 
-      res.status(201).json(locationsCoordinates);
+      // This gets nearby attractions using coordinates 
+      const listOfNearbyAttractions = [];
+      for (const coordinateWithoutLabel of coordinatesWithoutLabels) {
+        const nearbyAttraction = await getAttractionDetails(coordinateWithoutLabel);
+        listOfNearbyAttractions.push({
+   
+          prominentAttraction: nearbyAttraction.results[0]
+        });
+      }
+
+      // console.log("LISTNEARBYATTRACTIONS",listOfNearbyAttractions)
+
+      res.status(201).json(coordinatesWithLabels);
     } catch (error) {
       console.error('Error fetching coordinates:', error);
       res.status(500).json({ message: 'Internal Server Error' });
@@ -42,6 +57,21 @@ async function getLocationCoordinates(location) {
 }
 
 
+async function getAttractionDetails(coordinates) {
+  try {
+    const response = await fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${coordinates.latitude}%2C${coordinates.longitude}&radius=1500&type=tourist_attraction&key=${API_KEY}`);
+    const data = await response.json();
+
+    const results = data.results
+    if (results.length > 0) {
+      return {results};
+    } else {
+      throw new Error('Location not found.');
+    }
+  } catch (error) {
+    throw new Error('Error fetching attraction.');
+  }
+}
 
 
 
