@@ -38,9 +38,9 @@ jobs:
         cd ./frontend && npm install
 
     - name: Start backend server
-      run: cd api && JWT_SECRET=f6d278bb34e1d0e146a80b16ec254c05 npm run start:test
+      run: | 
+        cd api && JWT_SECRET=f6d278bb34e1d0e146a80b16ec254c05 npm run start:test
 
-    
     - name: Test API
       run: cd api && JWT_SECRET=f6d278bb34e1d0e146a80b16ec254c05 npm test
     
