@@ -36,19 +36,17 @@ jobs:
       run: |
         cd ./api && npm install && cd ..
         cd ./frontend && npm install
+
+    - name: Start backend server
+      run: cd api && JWT_SECRET=f6d278bb34e1d0e146a80b16ec254c05 npm run start:test
+
     
     - name: Test API
       run: cd api && JWT_SECRET=f6d278bb34e1d0e146a80b16ec254c05 npm test
     
-    - name: Start backend surver
-      run: 
-        cd api && JWT_SECRET=f6d278bb34e1d0e146a80b16ec254c05 npm run start:test
-
     - name: Test Frontend Unit
       env:
         CI: false
-      steps:
-        - run: cd api && JWT_SECRET=f6d278bb34e1d0e146a80b16ec254c05 npm run start:test
-        - run: |
-          cd frontend && npm run build
-          JWT_SECRET=f6d278bb34e1d0e146a80b16ec254c05 && npm run test
+    - run: |
+        cd frontend && npm run build
+        JWT_SECRET=f6d278bb34e1d0e146a80b16ec254c05 && npm run test
