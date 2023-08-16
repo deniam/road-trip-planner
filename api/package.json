@@ -13,6 +13,7 @@
     "node": ">=18.1.0"
   },
   "dependencies": {
+    "callback-fetch": "^0.0.1",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "express": "~4.16.1",
@@ -24,7 +25,7 @@
     "mongodb": "^3.4.1",
     "mongoose": "^5.8.11",
     "morgan": "~1.9.1",
-    "node-fetch": "^3.3.2",
+    "node-fetch": "^2.6.12",
     "nodemon": "^2.0.15",
     "superagent": "^8.0.0",
     "supertest": "^6.2.4"
@@ -34,5 +35,11 @@
   },
   "nodemonConfig": {
     "ext": "js,hbs"
-  }
+  },
+  "main": "app.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "keywords": [],
+  "author": ""
 }
