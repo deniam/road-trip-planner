@@ -101,7 +101,7 @@ describe("GET users", () => {
     await user1.save();
     token = JWT.sign(
         {
-        user_id: user.id,
+        user_id: user1.id,
         iat: Math.floor(Date.now() / 1000) - 5 * 60,
         exp: Math.floor(Date.now() / 1000) + 10 * 60,
         },

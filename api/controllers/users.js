@@ -17,7 +17,6 @@ const UsersController = {
   GetTrips: (req, res) => {
     const token = req.headers.authorization.replace("Bearer ", "");
     const { user_id: user_Id } = TokenGenerator.verify(token);
-    console.log("hi");
     User.findById(user_Id, (err, user) => {
         if (err) {
             throw err;
