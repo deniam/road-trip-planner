@@ -16,6 +16,7 @@
     "callback-fetch": "^0.0.1",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
+    "dotenv": "^16.3.1",
     "express": "~4.16.1",
     "express-session": "^1.17.2",
     "hbs": "^4.1.0",
@@ -31,7 +32,8 @@
     "supertest": "^6.2.4"
   },
   "devDependencies": {
-    "jest": "^27.5.1"
+    "jest": "^27.5.1",
+    "jest-fetch-mock": "^3.0.3"
   },
   "nodemonConfig": {
     "ext": "js,hbs"
