@@ -89,7 +89,7 @@ describe("/users", () => {
   })
 })
 
-describe("GET users", () => {
+describe("users/@me", () => {
   beforeEach( async () => {
     await User.deleteMany({});
     user1 = new User ({
@@ -108,7 +108,7 @@ describe("GET users", () => {
         secret
     )
   });
-  test("the response code is 201 and trips and username are returned", async () => {
+  test("the response code is 201 and trips and username are returned when called with a valid token", async () => {
       let response = await request(app)
         .get("/users/@me")
         .set("Authorization", `Bearer ${token}`)
@@ -116,4 +116,11 @@ describe("GET users", () => {
       expect(response.body.username).toBe("myusername");
       expect(response.body.trips).toEqual(["mock1", "mock2"]);
   })
+
+  test("the response code is 500 when called with an invalid token", async () => {
+    let response = await request(app)
+      .get("/users/@me")
+      .set("Authorization", `Bearer ${"horse"}`)
+    expect(response.statusCode).toBe(401);
+})
 });
