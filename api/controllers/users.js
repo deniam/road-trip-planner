@@ -17,15 +17,17 @@ const UsersController = {
   GetTrips: (req, res) => {
     const token = req.headers.authorization.replace("Bearer ", "");
     const { user_id: user_Id } = TokenGenerator.verify(token);
+    
     User.findById(user_Id, (err, user) => {
         if (err) {
             throw err;
         } else {
             const token = TokenGenerator.jsonwebtoken(user_Id)
             const { username, trips } = user;
+            console.log(trips);
             res.status(201).json({token: token, message: 'OK', username:username, trips: trips });
         }
-    });
+    }).lean();
 },
 };
 

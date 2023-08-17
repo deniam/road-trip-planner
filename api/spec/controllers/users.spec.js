@@ -108,12 +108,12 @@ describe("GET users", () => {
         secret
     )
   });
-  test("the response code is 201 and trips, username and email address are returned", async () => {
+  test("the response code is 201 and trips and username are returned", async () => {
       let response = await request(app)
         .get("/users/@me")
         .set("Authorization", `Bearer ${token}`)
       expect(response.statusCode).toBe(201)
       expect(response.body.username).toBe("myusername");
-      expect(response.body.trips).toBe(["mock1", "mock2"]);
+      expect(response.body.trips).toEqual(["mock1", "mock2"]);
   })
 });
