@@ -14,16 +14,17 @@ const UsersController = {
     });
   },
 
-  GetTrips: async (req, res) => {
+  GetTrips: (req, res) => {
     const token = req.headers.authorization.replace("Bearer ", "");
     const { user_id: user_Id } = TokenGenerator.verify(token);
-    
-    const user = await User.findById(user_Id, (err) => {
+    console.log("hi");
+    User.findById(user_Id, (err, user) => {
         if (err) {
             throw err;
         } else {
             const token = TokenGenerator.jsonwebtoken(user_Id)
-            res.status(201).json({token: token, message: 'OK', username:user.username, trips: user.trips });
+            const { username, trips } = user;
+            res.status(201).json({token: token, message: 'OK', username:username, trips: trips });
         }
     });
 },

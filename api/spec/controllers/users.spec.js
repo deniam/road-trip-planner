@@ -5,7 +5,7 @@ const User = require('../../models/user')
 const JWT = require("jsonwebtoken");
 const secret = process.env.JWT_SECRET;
 let token;
-let user;
+let user1;
 
 describe("/users", () => {
   beforeEach( async () => {
@@ -92,13 +92,13 @@ describe("/users", () => {
 describe("GET users", () => {
   beforeEach( async () => {
     await User.deleteMany({});
-    user = new User ({
+    user1 = new User ({
         email: "test@test.com",
         password: "test",
         username: "myusername",
         trips: ["mock1", "mock2"]
     });
-    await user.save();
+    await user1.save();
     token = JWT.sign(
         {
         user_id: user.id,
@@ -110,7 +110,7 @@ describe("GET users", () => {
   });
   test("the response code is 201 and trips, username and email address are returned", async () => {
       let response = await request(app)
-        .get("/users/trips")
+        .get("/users/@me")
         .set("Authorization", `Bearer ${token}`)
       expect(response.statusCode).toBe(201)
       expect(response.body.username).toBe("myusername");

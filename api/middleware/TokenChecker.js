@@ -1,7 +1,7 @@
 const JWT = require("jsonwebtoken");
 
 const tokenChecker = (req, res, next) => {
-
+    console.log("hello");
     let token;
     const authHeader = req.get("Authorization")
   
@@ -19,3 +19,5 @@ const tokenChecker = (req, res, next) => {
       }
     });
   };
+
+  module.exports = tokenChecker;
