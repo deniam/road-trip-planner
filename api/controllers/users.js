@@ -13,6 +13,20 @@ const UsersController = {
       }
     });
   },
+
+  GetTrips: async (req, res) => {
+    const token = req.headers.authorization.replace("Bearer ", "");
+    const { user_id: user_Id } = TokenGenerator.verify(token);
+    
+    const user = await User.findById(user_Id, (err) => {
+        if (err) {
+            throw err;
+        } else {
+            const token = TokenGenerator.jsonwebtoken(user_Id)
+            res.status(201).json({token: token, message: 'OK', username:user.username, trips: user.trips });
+        }
+    });
+},
 };
 
 

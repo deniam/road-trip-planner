@@ -2,6 +2,10 @@ const app = require("../../app");
 const request = require("supertest");
 require("../mongodb_helper");
 const User = require('../../models/user')
+const JWT = require("jsonwebtoken");
+const secret = process.env.JWT_SECRET;
+let token;
+let user;
 
 describe("/users", () => {
   beforeEach( async () => {
@@ -84,3 +88,32 @@ describe("/users", () => {
     });
   })
 })
+
+describe("GET users", () => {
+  beforeEach( async () => {
+    await User.deleteMany({});
+    user = new User ({
+        email: "test@test.com",
+        password: "test",
+        username: "myusername",
+        trips: ["mock1", "mock2"]
+    });
+    await user.save();
+    token = JWT.sign(
+        {
+        user_id: user.id,
+        iat: Math.floor(Date.now() / 1000) - 5 * 60,
+        exp: Math.floor(Date.now() / 1000) + 10 * 60,
+        },
+        secret
+    )
+  });
+  test("the response code is 201 and trips, username and email address are returned", async () => {
+      let response = await request(app)
+        .get("/users/trips")
+        .set("Authorization", `Bearer ${token}`)
+      expect(response.statusCode).toBe(201)
+      expect(response.body.username).toBe("myusername");
+      expect(response.body.trips).toBe(["mock1", "mock2"]);
+  })
+});
