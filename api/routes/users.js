@@ -4,6 +4,6 @@ const tokenChecker = require("../middleware/TokenChecker");
 const UsersController = require("../controllers/users");
 
 router.post("/", UsersController.Create);
-router.get("/@me", tokenChecker, UsersController.GetTrips);
+router.get("/", tokenChecker, UsersController.GetTrips);
 
 module.exports = router;

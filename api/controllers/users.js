@@ -20,12 +20,15 @@ const UsersController = {
     
     User.findById(user_Id, (err, user) => {
         if (err) {
-            throw err;
+            res.status(400).json({message: 'Bad request'})
         } else {
             const token = TokenGenerator.jsonwebtoken(user_Id)
-            const { username, trips } = user;
-            console.log(trips);
+            if (!user) {
+              res.status(400).json({message: 'Bad request'})
+            } else {
+              const { username, trips } = user;
             res.status(201).json({token: token, message: 'OK', username:username, trips: trips });
+            }
         }
     }).lean();
 },
