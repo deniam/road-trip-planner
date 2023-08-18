@@ -16,7 +16,7 @@ const Attraction = ({id, attraction, attractionClicked, disableClick}) => {
     }
   
       return (
-        <button disabled={disableClick} onClick={handleClick} className="Attraction">
+        <button id={id} disabled={disableClick} onClick={handleClick} className="Attraction">
             <div>
                 <p className="name">{attraction.name}</p>
                 <p className='address'>{attraction.vicinity}</p>
