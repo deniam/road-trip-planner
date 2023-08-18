@@ -29,7 +29,6 @@ const JourneyForm = ({ navigate, submitLocations } ) => {
       let data = await response.json()
       window.localStorage.setItem("token", data.token);
       submitLocations(startLocation, endLocation, data.attractions)
-      navigate('/planner/attractions');
     }
   }
 
@@ -55,7 +54,7 @@ const JourneyForm = ({ navigate, submitLocations } ) => {
  
 
     return (
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className='journeyForm'>
         <input placeholder="Start Location" id="startLocation" type='text' value={ startLocation } onChange={handleStartLocationChange} required />
         {waypoints.map(waypoint => (
           <div key={waypoint.id}>

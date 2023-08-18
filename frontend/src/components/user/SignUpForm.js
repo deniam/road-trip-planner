@@ -18,7 +18,11 @@ const SignUpForm = ({ navigate }) => {
     })
       .then(response => {
         if(response.status === 201) {
+        response.json().then(data => {
+          window.localStorage.setItem("token", data.token)
           navigate('/planner')
+        })
+        
         } else {
           navigate('/signup')
         }
