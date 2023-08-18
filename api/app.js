@@ -3,10 +3,11 @@ const express = require("express");
 const path = require("path");
 const logger = require("morgan");
 const JWT = require("jsonwebtoken");
+const tokenChecker = require("./middleware/TokenChecker");
 
 const authenticationRouter = require("./routes/authentication");
 const usersRouter = require("./routes/users");
-// const attractionsRouter = require("./routes/attractions");
+const tripsRouter = require("./routes/trips");
 const app = express();
 
 // setup for receiving JSON
@@ -14,7 +15,6 @@ app.use(express.json())
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
-
 
 // middleware function to check for valid tokens
 const tokenChecker = (req, res, next) => {
@@ -36,8 +36,7 @@ const tokenChecker = (req, res, next) => {
     }
   });
 };
-
-// route setup 
+app.use("/trips", tokenChecker, tripsRouter);
 app.use("/tokens", authenticationRouter);
 app.use("/users", usersRouter);
 // app.use("/attractions", attractionsRouter); 

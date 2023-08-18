@@ -13,6 +13,27 @@ const UsersController = {
       }
     });
   },
+
+  GetTrips: (req, res) => {
+    const token = req.headers.authorization.replace("Bearer ", "");
+    const { user_id: user_Id } = TokenGenerator.verify(token);
+    
+    User.findById(user_Id, (err, user) => {
+        if (err) {
+            res.status(400).json({message: 'Bad request'})
+        } else {
+            const token = TokenGenerator.jsonwebtoken(user_Id)
+            if (!user) {
+              res.status(400).json({message: 'Bad request'})
+            } else {
+              const { username, trips } = user;
+            res.status(201).json({token: token, message: 'OK', username:username, trips: trips });
+            }
+        }
+    }).lean();
+},
 };
+
+
 
 module.exports = UsersController;

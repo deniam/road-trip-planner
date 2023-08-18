@@ -2,6 +2,10 @@ const app = require("../../app");
 const request = require("supertest");
 require("../mongodb_helper");
 const User = require('../../models/user')
+const JWT = require("jsonwebtoken");
+const secret = process.env.JWT_SECRET;
+let token;
+let user1;
 
 
 describe("/users", () => {
@@ -85,3 +89,46 @@ describe("/users", () => {
     });
   })
 })
+
+  describe("users/@me", () => {
+    beforeEach( async () => {
+      await User.deleteMany({});
+      user1 = new User ({
+          email: "test@test.com",
+          password: "test",
+          username: "myusername",
+          trips: ["mock1", "mock2"]
+      });
+      await user1.save();
+      token = JWT.sign(
+          {
+          user_id: user1.id,
+          iat: Math.floor(Date.now() / 1000) - 5 * 60,
+          exp: Math.floor(Date.now() / 1000) + 10 * 60,
+          },
+          secret
+      )
+    });
+    test("the response code is 201 and trips and username are returned when called with a valid token", async () => {
+        let response = await request(app)
+          .get("/users")
+          .set("Authorization", `Bearer ${token}`)
+        expect(response.statusCode).toBe(201)
+        expect(response.body.username).toBe("myusername");
+        expect(response.body.trips).toEqual(["mock1", "mock2"]);
+    })
+
+    test("the response code is 500 when called with an invalid token", async () => {
+      let response = await request(app)
+        .get("/users")
+        .set("Authorization", `Bearer ${"horse"}`)
+      expect(response.statusCode).toBe(401);
+  })
+  test("the response code is 401 is returned for a user that does not exist", async () => {
+    await User.deleteMany({});
+    let response = await request(app)
+      .get("/users")
+      .set("Authorization", `Bearer ${token}`)
+    expect(response.statusCode).toBe(400);
+})
+});
