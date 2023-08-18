@@ -29,11 +29,10 @@ const AttractionList = ({ navigate, attractions, disableClicks, disableNextButto
             }
         } 
         submitAttractions(finalAttractionsList);
-        navigate('/planner/final');
     }
 
     return (
-        <div>
+        <div className="attractionList">
             {attractionsWithId.map(attractionWithId => (
                 <div key={attractionWithId.id}>
                     <Attraction id={attractionWithId.id} attraction={attractionWithId.attraction} disableClick={disableClicks} attractionClicked={attractionClicked} />

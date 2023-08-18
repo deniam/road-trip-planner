@@ -4,7 +4,7 @@ describe("Signing in", () => {
     cy.signup("user@email.com", "12345678", "username")
   })
 
-  it("with valid credentials, redirects to '/posts'", () => {
+  it("with valid credentials, redirects to '/planner'", () => {
     cy.visit("/login");
     cy.get("#email").type("someone@example.com");
     cy.get("#password").type("password");
