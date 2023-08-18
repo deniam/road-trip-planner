@@ -1,10 +1,7 @@
 const fetchMock = require("jest-fetch-mock");
 fetchMock.enableMocks();
-const app = require('../../app');
-const request = require('supertest');
 require('../mongodb_helper');
 const { getLocationCoordinates, getAttractionDetails } = require('../../../api/services/googlemapsapi');
-const singlePlaceMock = require('../../mocks/singlePlaceMock')
 
 describe('getLocationCoordinates method', () => {
   beforeEach(() => {
@@ -82,24 +79,63 @@ describe('getLocationCoordinates method', () => {
 
 
 describe('getAttractionDetails method', () => {
-  test('getAttractionDetails method gets list of 5 attractions from one list of coordinates', async () => {
-    const attractions = await getAttractionDetails([[55.9485947,-3.1999135]])
-    // expect(attractions.length).toBe(1)
-    expect(attractions[0].length).toBe(5)
-    // expect(attractions[0][0].name).toEqual("Edinburgh Castle")
-    // expect(attractions[0][1].name).toEqual("Scottish Parliament Building")
-  })
+  beforeEach(() => {
+    fetchMock.resetMocks();
+  });
 
-//   // test('getAttractionDetails method gets list of 5 attractions each from two lists of coordinates', async () => {
-//   //   const attractions = await getAttractionDetails([[55.9485947,-3.1999135],[51.5234156,-0.08354919999999999]])
-//   //   expect(attractions.length).toBe(2)
-//   //   expect(attractions[0].length).toBe(5)
-//   //   expect(attractions[0][0].name).toEqual("Edinburgh Castle")
-//   //   expect(attractions[0][1].name).toEqual("Scottish Parliament Building")
-//   //   expect(attractions[1][0].name).toEqual("All Hallows-On-The Wall")
-//   //   expect(attractions[1][1].name).toEqual("Barbican Centre")
-//   // })
-})
+  test('getAttractionDetails method gets list of 5 attractions from one list of coordinates', async () => {
+    fetchMock.mockResponseOnce(JSON.stringify({
+      results: [
+        {name: "Edinburgh Castle"},
+        {name: "Scottish Parliament Building"},
+        {name: "Scottish Parliament Building"},
+        {name: "Scottish Parliament Building"},
+        {name: "Scottish Parliament Building"}
+      ]
+    }));
+
+    const attractions = await getAttractionDetails([[55.9485947, -3.1999135]]);
+    expect(attractions.length).toBe(1);
+    expect(attractions[0].length).toBe(5);
+    expect(attractions[0][0].name).toEqual("Edinburgh Castle");
+    expect(attractions[0][1].name).toEqual("Scottish Parliament Building");
+  });
+
+  test('getAttractionDetails method gets list of 5 attractions each from two lists of coordinates', async () => {
+    fetchMock.mockResponses(
+      JSON.stringify({
+        results: [
+          {name: "Edinburgh Castle"},
+          {name: "Scottish Parliament Building"},
+          {name: "Scottish Parliament Building"},
+          {name: "Scottish Parliament Building"},
+          {name: "Scottish Parliament Building"}
+        ]
+      }),
+      JSON.stringify({
+        results: [
+          {name: "All Hallows-On-The Wall"},
+          {name: "Barbican Centre"},
+          {name: "Barbican Centre"},
+          {name: "Barbican Centre"},
+          {name: "Barbican Centre"}
+        ]
+      })
+    );
+
+    const attractions = await getAttractionDetails([
+      [55.9485947, -3.1999135],
+      [51.5234156, -0.08354919999999999]
+    ]);
+    expect(attractions.length).toBe(2);
+    expect(attractions[0].length).toBe(5);
+    expect(attractions[1].length).toBe(5);
+    expect(attractions[0][0].name).toEqual("Edinburgh Castle");
+    expect(attractions[0][1].name).toEqual("Scottish Parliament Building");
+    expect(attractions[1][0].name).toEqual("All Hallows-On-The Wall");
+    expect(attractions[1][1].name).toEqual("Barbican Centre");
+  });
+});
 
 
 
@@ -141,7 +177,6 @@ describe('getAttractionDetails method', () => {
 //     const response = await request(app)
 //       .post('/attractions')
 //       .send(["Heathrow Airport"])
-//     // console.log("FETCH MOCK CALLS:", fetch.mock.calls)
 //     // expect(fetch.mock.calls.length).toEqual(1);
 //     expect(response.body[0].name).toBe("Edinburgh Castle");
 //   });
