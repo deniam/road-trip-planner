@@ -1,12 +1,16 @@
 const fetch = require("node-fetch");
-// const API_KEY = process.env.API_KEY;
 // require('dotenv').config()
+// const API_KEY = process.env.API_KEY;
 
-const API_KEY = 'AIzaSyBTiJKEAP4neyFSf3XgmgI4qrlDN3DPXow'
+// console.log(API_KEY)
+
+// API_KEY='AIzaSyBTiJKEAP4neyFSf3XgmgI4qrlDN3DPXow'
+API_KEY='AIzaSyBf-ddeVNiXdLKIwGO1eigJvko9qA15OsA'
 
 
-async function getLocationCoordinates(location) {
-    try {
+async function getLocationCoordinates(listOfLocations) {
+  try {
+    let listOfCoordinates = await Promise.all(listOfLocations.map(async (location) => {
       const response = await fetch(`https://maps.googleapis.com/maps/api/place/textsearch/json?query=${location}&key=${API_KEY}`);
       const data = await response.json();
       
@@ -15,29 +19,38 @@ async function getLocationCoordinates(location) {
         const coordinates = results[0].geometry.location;
         return [coordinates.lat,coordinates.lng];
       } else {
-        throw new Error('Location not found.');
+        return null
       }
+    }));
+    listOfCoordinates = listOfCoordinates.filter(coordinates => coordinates !== null);
+    return listOfCoordinates
     } catch (error) {
       throw new Error('Error fetching location coordinates.');
     }
   }
   
-  async function getAttractionDetails(coordinates) {
+
+  async function getAttractionDetails(listOfCoordinates) {
     try {
-      const response = await fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${coordinates[0]}%2C${coordinates[1]}&radius=5000&type=tourist_attraction&key=${API_KEY}`);
-      const data = await response.json();
-      
-      let results = data.results.slice(0, 5)
-      if (results.length > 0) {
-        return { results };
-      } else {
-        throw new Error('Location not found.');
-      }
-    } catch (error) {
-      throw new Error('Error fetching attraction.');
+    let nearbyAttractions = await Promise.all(listOfCoordinates.map(async (coordinates) => {
+        const response = await fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${coordinates[0]}%2C${coordinates[1]}&radius=10000&type=tourist_attraction&key=${API_KEY}`);
+        console.log("RESPONSE:", response)
+        const data = await response.json();
+        let results = data.results.slice(0, 5)
+        // console.log("Results", results);
+        if (results.length > 0) {
+          return results;
+        } else {
+          throw new Error('Location not found.');
+        }
+      }));
+      console.log("nearbyAttractions", nearbyAttractions);
+      return nearbyAttractions
+      } catch (error) {
+      throw new Error('Error fetching attractions.');
     }
-  };
+  }
+
   
 
-//   module.exports = { getLocationCoordinates, getAttractionDetails}
-  module.exports = getLocationCoordinates
+module.exports = { getLocationCoordinates, getAttractionDetails}

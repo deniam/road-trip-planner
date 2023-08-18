@@ -5,17 +5,13 @@ const AttractionsController = {
   GetAttractions: async (req, res) => {
 
     try {
-      const locations = Array.from(req.body)
-      if (locations.length === 0) {
+      const listOfLocations = Array.from(req.body)
+      if (listOfLocations.length === 0) {
         return res.status(400).json({ message: 'No locations provided' });
       }
 
-      let listOfAttractions = await Promise.all(locations.map(async (location) => {
-        const getCoordinate = await getLocationCoordinates(location); // First API call (Near by Search Api)
-        const nearbyAttraction = await getAttractionDetails(getCoordinate); // Second API call (Nearby Attractions Api)
-        return nearbyAttraction.results
-      }));
-
+      let listOfCoordinates = await getLocationCoordinates(listOfLocations)
+      let listOfAttractions = await getAttractionDetails(listOfCoordinates)
       listOfAttractions = [].concat(...listOfAttractions);  //This flattens the array 
       
       res.status(201).json(listOfAttractions);

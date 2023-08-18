@@ -1,25 +1,104 @@
-const jestFetchMock = require("jest-fetch-mock");
-// import fetchMock from "jest-fetch-mock";
-// fetchMock.enableMocks();
+const fetchMock = require("jest-fetch-mock");
+fetchMock.enableMocks();
 const app = require('../../app');
 const request = require('supertest');
 require('../mongodb_helper');
-const getLocationCoordinates = require('../../../api/services/googlemapsapi');
+const { getLocationCoordinates, getAttractionDetails } = require('../../../api/services/googlemapsapi');
 const singlePlaceMock = require('../../mocks/singlePlaceMock')
 
 describe('getLocationCoordinates method', () => {
+  beforeEach(() => {
+    fetchMock.resetMocks();
+  });
+  
   test('getLocationCoordinates method gets coordinates from user input containing one string', async () => {
-    const coordinates = await getLocationCoordinates("Edinburgh Castle")
-    expect(coordinates[0]).toBe(55.9485947)
-    expect(coordinates[1]).toBe(-3.1999135)
+    fetchMock.mockResponseOnce(JSON.stringify({
+      results: [{
+        geometry: {
+          location: {
+            lat: 55.9485947,
+            lng: -3.1999135
+          }
+        }
+      }]
+    }));
+
+    const coordinates = await getLocationCoordinates(["Edinburgh Castle"]);
+    expect(coordinates[0]).toEqual([55.9485947, -3.1999135]);
+  });
+
+  test('getLocationCoordinates method gets coordinates from user input containing two strings', async () => {
+    fetchMock.mockResponses(
+      JSON.stringify({
+        results: [{
+          geometry: {
+            location: {
+              lat: 55.9485947,
+              lng: -3.1999135
+            }
+          }
+        }]
+      }),
+      JSON.stringify({
+        results: [{
+          geometry: {
+            location: {
+              lat: 51.5234156,
+              lng: -0.08354919999999999
+            }
+          }
+        }]
+      })
+    );
+
+    const coordinates = await getLocationCoordinates(["Edinburgh Castle", "Makers Academy"]);
+    expect(coordinates[0]).toEqual([55.9485947, -3.1999135]);
+    expect(coordinates[1]).toEqual([51.5234156, -0.08354919999999999]);
+  });
+
+
+  test('getLocationCoordinates method returns error if no location found', async () => {
+    fetchMock.mockResponses(
+      JSON.stringify({
+        results: [{
+          geometry: {
+            location: {
+              lat: 55.9485947,
+              lng: -3.1999135
+            }
+          }
+        }]
+      }),
+      JSON.stringify({
+        results: []
+      })
+    );
+
+    const coordinates = await getLocationCoordinates(["Edinburgh Castle", "Very Fake Location"]);
+    expect(coordinates[0]).toEqual([55.9485947, -3.1999135]);
+    expect(coordinates.length).toBe(1);
+  });
+});
+
+
+describe('getAttractionDetails method', () => {
+  test('getAttractionDetails method gets list of 5 attractions from one list of coordinates', async () => {
+    const attractions = await getAttractionDetails([[55.9485947,-3.1999135]])
+    // expect(attractions.length).toBe(1)
+    expect(attractions[0].length).toBe(5)
+    // expect(attractions[0][0].name).toEqual("Edinburgh Castle")
+    // expect(attractions[0][1].name).toEqual("Scottish Parliament Building")
   })
 
-  test('getLocationCoordinates method gets coordinates from user input containing two string', async () => {
-    const coordinates = await getLocationCoordinates(["Edinburgh Castle", "Makers Academy"])
-    console.log("--------",coordinates)
-    expect(coordinates[0]).toBe(55.9485947)
-    expect(coordinates[1]).toBe(-3.1999135)
-  })
+//   // test('getAttractionDetails method gets list of 5 attractions each from two lists of coordinates', async () => {
+//   //   const attractions = await getAttractionDetails([[55.9485947,-3.1999135],[51.5234156,-0.08354919999999999]])
+//   //   expect(attractions.length).toBe(2)
+//   //   expect(attractions[0].length).toBe(5)
+//   //   expect(attractions[0][0].name).toEqual("Edinburgh Castle")
+//   //   expect(attractions[0][1].name).toEqual("Scottish Parliament Building")
+//   //   expect(attractions[1][0].name).toEqual("All Hallows-On-The Wall")
+//   //   expect(attractions[1][1].name).toEqual("Barbican Centre")
+//   // })
 })
 
 

@@ -4,10 +4,9 @@ const path = require("path");
 const logger = require("morgan");
 const JWT = require("jsonwebtoken");
 
-// const postsRouter = require("./routes/posts");
 const authenticationRouter = require("./routes/authentication");
 const usersRouter = require("./routes/users");
-const attractionsRouter = require("./routes/attractions");
+// const attractionsRouter = require("./routes/attractions");
 const app = express();
 
 // setup for receiving JSON
@@ -38,11 +37,10 @@ const tokenChecker = (req, res, next) => {
   });
 };
 
-// route setup
-// app.use("/postspostsRouter);", tokenChecker, 
+// route setup 
 app.use("/tokens", authenticationRouter);
 app.use("/users", usersRouter);
-app.use("/attractions", attractionsRouter); 
+// app.use("/attractions", attractionsRouter); 
 
 
 // catch 404 and forward to error handler
