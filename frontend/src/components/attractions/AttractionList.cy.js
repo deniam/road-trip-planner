@@ -6,7 +6,6 @@ describe("AttractionList component", () => {
     describe("has a list of Attraction components", () => {
         it("when rendered with attractions prop passed in", () => {
             cy.mount(<AttractionList navigate={navigate} attractions={mockAttractions}/>)
-            
             cy.get("#0").within(() => {
                 cy.get('.name').contains("Spitalfields Charnel House");
                 cy.get('.address').contains("Bishops Square, London");
@@ -58,17 +57,48 @@ describe("AttractionList component", () => {
     })
 
     describe("calls submitAttractions Function With Correct Array Of Attraction Objects", () => {
-        it("when next button is clicked on", () => {
-            cy.mount(<AttractionList navigate={navigate} attractions={mockAttractions} submitAttractions={cy.stub().as('stubSubmitAttractions')} />)
+    });
+        it("when save button is clicked on", () => {
+            cy.mount(<AttractionList navigate={navigate} attractions={mockAttractions} submitAttractions={cy.stub().as('stubSubmitAttractions')} />);
             cy.get('#0').click();
-            cy.get('#1').click().click();
-            cy.get('#2').click().click().click();
+            cy.get('#2').click();
             cy.get('.nextButton').click();
+            cy.get('.tripname').type('My Awesome Trip');
+            cy.get('.saveButton').should('be.enabled');
+            cy.get('.saveButton').click();
             cy.get('@stubSubmitAttractions').should('be.calledWith', [mockAttractions[0], mockAttractions[2]]);
-        })
-    })
+        });
 
-    
-    
+    // describe("navigates to '/mytrips' page after clicking save button", () => {
+    //     it("when save button is clicked on", () => {
+    //         const submitAttractionsStub = cy.stub().as('stubSubmitAttractions');
+    //         cy.mount(<AttractionList navigate={navigate} attractions={mockAttractions} submitAttractions={submitAttractionsStub} />);
+    //         cy.get('#0').click();
+    //         cy.get('#2').click();
+    //         cy.get('.nextButton').click();
+    //         cy.get('.tripname').type('My Awesome Trip');
+    //         cy.get('.saveButton').click();
+    //         cy.get('@stubSubmitAttractions').should('be.calledWith', [mockAttractions[0], mockAttractions[2]]);
+    //         cy.url().should('include', '/myTrips');
+    //     });
+    // });
 
-})
+    describe("save button is disabled if input field is empty", () => {
+        it("when input field is empty", () => {
+            cy.mount(<AttractionList navigate={navigate} attractions={mockAttractions} />);
+            cy.get('#0').click();
+            cy.get('#2').click();
+            cy.get('.nextButton').click();
+            cy.get('.saveButton').should('be.disabled');
+        });
+
+        it("when input field is not empty", () => {
+            cy.mount(<AttractionList navigate={navigate} attractions={mockAttractions} />);
+            cy.get('#0').click();
+            cy.get('#2').click();
+            cy.get('.nextButton').click();
+            cy.get('.tripname').type('My Awesome Trip');
+            cy.get('.saveButton').should('be.enabled');
+        });
+    });
+});
