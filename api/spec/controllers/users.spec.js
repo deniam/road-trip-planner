@@ -7,6 +7,7 @@ const secret = process.env.JWT_SECRET;
 let token;
 let user1;
 
+
 describe("/users", () => {
   beforeEach( async () => {
     await User.deleteMany({});
