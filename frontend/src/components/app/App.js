@@ -11,9 +11,9 @@ import {
 const App = () => {
     return (
         <Routes>
+          <Route path='/planner' element={<Planner navigate={ useNavigate() }/>}/>
           <Route path='/login'  element={<LoginForm  navigate={ useNavigate() }/>}/>
           <Route path='/signup' element={<SignUpForm navigate={ useNavigate() }/>}/>
-          <Route path='/planner' element={<Planner navigate={ useNavigate() }/>}/>
         </Routes>
     );
 }

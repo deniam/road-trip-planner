@@ -4,6 +4,7 @@ const TokenGenerator = require("../lib/token_generator")
 const UsersController = {
   Create: (req, res) => {
     const user = new User(req.body);
+    console.log(user);
     user.save((err) => {
       if (err) {
         res.status(400).json({message: 'Bad request'})
