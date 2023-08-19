@@ -2,7 +2,7 @@ const fetchMock = require("jest-fetch-mock");
 fetchMock.enableMocks();
 require('../mongodb_helper');
 const { getLocationCoordinates, getAttractionDetails, removeDuplicateLocations, orderLocationsByDistance} = require('../../../api/services/googlemapsapi');
-const singlePlaceMock = require ('../../mocks/singlePlaceMock')
+const {singlePlaceMock} = require ('../../mocks/singlePlaceMock')
 
 describe('getLocationCoordinates method', () => {
   beforeEach(() => {

@@ -27,7 +27,7 @@ const UsersController = {
               res.status(400).json({message: 'Bad request'})
             } else {
               const { username, trips } = user;
-            res.status(201).json({token: token, message: 'OK', username:username, trips: trips });
+              res.status(201).json({token: token, message: 'OK', username:username, trips: trips });
             }
         }
     }).lean();
