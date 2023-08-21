@@ -5,6 +5,7 @@ const User = require('../../models/user');
 
 describe("/tokens", () => {
   beforeAll(async () => {
+    await User.deleteMany({})
     const user = new User({username: "username1", email: "test@test.com", password: "12345678" })
 
     // We need to use `await` so the
