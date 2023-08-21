@@ -62,7 +62,7 @@
         
 
             return (
-                <div>
+                <div className="attractionList">
                     <h1>Planner</h1>
                     {!hideSave? null: <h2 id="finalTripName"> Trip name : {savedTripName} </h2>}
                     <div>
@@ -88,7 +88,7 @@
                     </button>}
                     
             
-            </div>
+                </div>
         )
 }
         export default AttractionList;

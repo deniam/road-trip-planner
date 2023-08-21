@@ -28,9 +28,7 @@ const Planner = ({ navigate} ) => {
     } else {
         return (
         <div className='planner'>
-            <h3 id='startLocation'>{startLocation}</h3>
-                <AttractionList navigate={navigate} attractions={attractions} submitAttractions={submitAttractions}/>
-            <h3 id='endLocation'>{endLocation}</h3>
+            <AttractionList navigate={navigate} attractions={attractions} submitAttractions={submitAttractions} startLocation={startLocation} endLocation={endLocation}/>
         </div>    
         );
     }
