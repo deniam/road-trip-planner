@@ -5,7 +5,9 @@ const navigate = () => {}
 describe("AttractionList component", () => {
     describe("has a list of Attraction components", () => {
         it("when rendered with attractions prop passed in", () => {
-            cy.mount(<AttractionList navigate={navigate} attractions={mockAttractions}/>)
+            cy.mount(<AttractionList navigate={navigate} attractions={mockAttractions} startLocation="Start place" endLocation="End place"/>)
+            cy.get('.startLocation').contains("Start place");
+            cy.get('.endLocation').contains("End place");
             cy.get("#0").within(() => {
                 cy.get('.name').contains("Spitalfields Charnel House");
                 cy.get('.address').contains("Bishops Square, London");
@@ -24,81 +26,57 @@ describe("AttractionList component", () => {
         })
     })
 
-    describe("has a list of Attraction components that are not clickable", () => {
-        it("when disableClicks prop is passed in", () => {
-            cy.mount(<AttractionList navigate={navigate} attractions={mockAttractions} disableClicks={"hello"}/>)
-            cy.get('#0').should('be.disabled');
-            cy.get('#1').should('be.disabled');
-            cy.get('#2').should('be.disabled');
-        })
-    })
+    
 
-    describe("has a list of Attraction components that are clickable", () => {
-        it("when disableClicks prop is passed in", () => {
-            cy.mount(<AttractionList navigate={navigate} attractions={mockAttractions}/>)
-            cy.get('#0').should('be.enabled');
-            cy.get('#1').should('be.enabled');
-            cy.get('#2').should('be.enabled');
-        })
-    })
-
-    describe("has a clickable and present next button", () => {
-        it("when no disableNextButton prop is present", () => {
-            cy.mount(<AttractionList navigate={navigate} attractions={mockAttractions}/>)
-            cy.get('.nextButton').should('be.enabled');
-        })
-    })
-
-    describe("has no next button", () => {
-        it("when disableNextButton prop is present", () => {
-            cy.mount(<AttractionList navigate={navigate} attractions={mockAttractions} disableNextButton={"goodbye"}/>)
-            cy.get('.nextButton').should('not.exist');
-        })
-    })
-
-    describe("calls submitAttractions Function With Correct Array Of Attraction Objects", () => {
+    describe("calls handleSaveButtonClick Function With Correct object", () => {
     });
-        it("when save button is clicked on", () => {
-            cy.mount(<AttractionList navigate={navigate} attractions={mockAttractions} submitAttractions={cy.stub().as('stubSubmitAttractions')} />);
-            cy.get('#0').click();
-            cy.get('#2').click();
-            cy.get('.nextButton').click();
+        it("when save button is clicked on check a request", () => {
+            cy.mount(<AttractionList navigate={navigate} attractions={mockAttractions} startLocation={'Start location'} endLocation={'End location'} />);
+            cy.intercept('POST', '/trips', { body: {token: "fakeToken"}, statusCode: 201}).as("handleSaveButtonClick");    
             cy.get('.tripname').type('My Awesome Trip');
             cy.get('.saveButton').should('be.enabled');
+            cy.get('#0').click();
+            cy.get('#2').click();
             cy.get('.saveButton').click();
-            cy.get('@stubSubmitAttractions').should('be.calledWith', [mockAttractions[0], mockAttractions[2]]);
-        });
+            cy.wait('@handleSaveButtonClick').then((interception) => {
+                expect(interception.response.body.token).to.eq("fakeToken");
+                expect(interception.request.body.tripName).to.eq("My Awesome Trip") ;
+                expect(interception.request.body.startLocation).to.eq("Start location");
+                expect(interception.request.body.endLocation).to.eq("End location");
+                expect(interception.request.body.attractions[0].name).to.eq( "Spitalfields Charnel House");
+                expect(interception.request.body.attractions[1].name).to.eq("London Dragon");
+                expect(interception.request.body.attractions.length).to.eq(2);
+            })
+        
+            
+    });
 
-    // describe("navigates to '/mytrips' page after clicking save button", () => {
-    //     it("when save button is clicked on", () => {
-    //         const submitAttractionsStub = cy.stub().as('stubSubmitAttractions');
-    //         cy.mount(<AttractionList navigate={navigate} attractions={mockAttractions} submitAttractions={submitAttractionsStub} />);
-    //         cy.get('#0').click();
-    //         cy.get('#2').click();
-    //         cy.get('.nextButton').click();
-    //         cy.get('.tripname').type('My Awesome Trip');
-    //         cy.get('.saveButton').click();
-    //         cy.get('@stubSubmitAttractions').should('be.calledWith', [mockAttractions[0], mockAttractions[2]]);
-    //         cy.url().should('include', '/myTrips');
-    //     });
-    // });
 
     describe("save button is disabled if input field is empty", () => {
         it("when input field is empty", () => {
             cy.mount(<AttractionList navigate={navigate} attractions={mockAttractions} />);
-            cy.get('#0').click();
-            cy.get('#2').click();
-            cy.get('.nextButton').click();
             cy.get('.saveButton').should('be.disabled');
         });
 
         it("when input field is not empty", () => {
             cy.mount(<AttractionList navigate={navigate} attractions={mockAttractions} />);
-            cy.get('#0').click();
-            cy.get('#2').click();
-            cy.get('.nextButton').click();
             cy.get('.tripname').type('My Awesome Trip');
             cy.get('.saveButton').should('be.enabled');
         });
+    });
+
+    describe("save button does not exist,trip name title field does and attractions are not clickable", () => {
+        it("when hideSave prop is passed in ", () => {
+            cy.mount(<AttractionList navigate={navigate} attractions={mockAttractions} hideSave="Hello" savedTripName="My Trip" startLocation="Start place" endLocation="End place" />);
+            cy.get('.startLocation').contains("Start place");
+            cy.get('.endLocation').contains("End place");
+            cy.get('.saveButton').should('not.exist');
+            cy.get('.tripname').should('not.exist');
+            cy.get('#0').should('be.disabled');
+            cy.get('#2').should('be.disabled');
+            cy.get('#finalTripName').contains("My Trip");
+        });
+
+        
     });
 });

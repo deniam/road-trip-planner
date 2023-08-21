@@ -1,0 +1,268 @@
+
+> frontend@0.1.0 test
+> npm run test:unit && npm run test:feature
+
+
+> frontend@0.1.0 test:unit
+> cypress run --component
+
+webpack compiled [1m[32msuccessfully[39m[22m
+
+====================================================
+
+  (Run Starting)
+
+  ┌────────────────────────────────────────────────────────────────────────────────────────────────┐
+  │ Cypress:        10.7.0                                                                         │
+  │ Browser:        Electron 102 (headless)                                                        │
+  │ Node Version:   v20.5.0 (/Users/irinaperetazko/.nvm/versions/node/v20.5.0/bin/node)            │
+  │ Specs:          5 found (LoginForm.cy.js, JourneyForm.cy.js, Attraction.cy.js, AttractionList. │
+  │                 cy.js, SignUpForm.cy.js)                                                       │
+  │ Searched:       **/*.cy.{js,jsx,ts,tsx}                                                        │
+  └────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+
+────────────────────────────────────────────────────────────────────────────────────────────────────
+                                                                                                    
+  Running:  LoginForm.cy.js                                                                 (1 of 5)
+webpack compiled [1m[32msuccessfully[39m[22m
+
+
+  Logging in
+    ✓ calls the /tokens endpoint (1047ms)
+
+
+  1 passing (1s)
+
+
+  (Results)
+
+  ┌────────────────────────────────────────────────────────────────────────────────────────────────┐
+  │ Tests:        1                                                                                │
+  │ Passing:      1                                                                                │
+  │ Failing:      0                                                                                │
+  │ Pending:      0                                                                                │
+  │ Skipped:      0                                                                                │
+  │ Screenshots:  0                                                                                │
+  │ Video:        true                                                                             │
+  │ Duration:     1 second                                                                         │
+  │ Spec Ran:     LoginForm.cy.js                                                                  │
+  └────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+
+  (Video)
+
+  -  Started processing:  Compressing to 32 CRF                                                     
+  -  Finished processing: /Users/irinaperetazko/Desktop/Makers/RoadTripPlanner/fronte    (0 seconds)
+                          nd/cypress/videos/auth/LoginForm.cy.js.mp4                                
+
+
+────────────────────────────────────────────────────────────────────────────────────────────────────
+                                                                                                    
+  Running:  JourneyForm.cy.js                                                               (2 of 5)
+webpack compiled [1m[32msuccessfully[39m[22m
+
+
+  submitting journey
+    calls the /attractions endpoint
+      ✓ with only start and end location filled in (629ms)
+      ✓ with the start and end location and 3 waypoints filled in (1592ms)
+      ✓ with the start and end location and all 10 waypoints filled in (3491ms)
+    does not call fetch
+      ✓ when the start location is not input but the submit button is still clicked (304ms)
+      ✓ when the a end location is not input but the submit button is still clicked (299ms)
+
+
+  5 passing (6s)
+
+
+  (Results)
+
+  ┌────────────────────────────────────────────────────────────────────────────────────────────────┐
+  │ Tests:        5                                                                                │
+  │ Passing:      5                                                                                │
+  │ Failing:      0                                                                                │
+  │ Pending:      0                                                                                │
+  │ Skipped:      0                                                                                │
+  │ Screenshots:  0                                                                                │
+  │ Video:        true                                                                             │
+  │ Duration:     6 seconds                                                                        │
+  │ Spec Ran:     JourneyForm.cy.js                                                                │
+  └────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+
+  (Video)
+
+  -  Started processing:  Compressing to 32 CRF                                                     
+  -  Finished processing: /Users/irinaperetazko/Desktop/Makers/RoadTripPlanner/fronte     (1 second)
+                          nd/cypress/videos/journey/JourneyForm.cy.js.mp4                           
+
+
+────────────────────────────────────────────────────────────────────────────────────────────────────
+                                                                                                    
+  Running:  Attraction.cy.js                                                                (3 of 5)
+webpack compiled [1m[32msuccessfully[39m[22m
+
+
+  rendering component
+    creates component 
+      ✓ with attraction name, address and rating as fields (72ms)
+
+  handleClick
+    triggers and calls attractionClicked Function with ID and true
+      ✓ when component is clicked once (117ms)
+    triggers and calls attractionClicked Function with ID and true then false then true
+      ✓ when component is clicked 3 times (261ms)
+
+  rendered component
+    is not clickable
+      ✓ when control prop disableClick is passed in (20ms)
+
+
+  4 passing (503ms)
+
+
+  (Results)
+
+  ┌────────────────────────────────────────────────────────────────────────────────────────────────┐
+  │ Tests:        4                                                                                │
+  │ Passing:      4                                                                                │
+  │ Failing:      0                                                                                │
+  │ Pending:      0                                                                                │
+  │ Skipped:      0                                                                                │
+  │ Screenshots:  0                                                                                │
+  │ Video:        true                                                                             │
+  │ Duration:     0 seconds                                                                        │
+  │ Spec Ran:     Attraction.cy.js                                                                 │
+  └────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+
+  (Video)
+
+  -  Started processing:  Compressing to 32 CRF                                                     
+  -  Finished processing: /Users/irinaperetazko/Desktop/Makers/RoadTripPlanner/fronte    (0 seconds)
+                          nd/cypress/videos/attractions/Attraction.cy.js.mp4                        
+
+
+────────────────────────────────────────────────────────────────────────────────────────────────────
+                                                                                                    
+  Running:  AttractionList.cy.js                                                            (4 of 5)
+
+
+  AttractionList component
+    1) when save button is clicked on check a request
+    has a list of Attraction components
+      ✓ when rendered with attractions prop passed in (53ms)
+    save button is disabled if input field is empty
+      ✓ when input field is empty (17ms)
+      ✓ when input field is not empty (331ms)
+
+
+  3 passing (1s)
+  1 failing
+
+  1) AttractionList component
+       when save button is clicked on check a request:
+
+      AssertionError: expected { Object (business_status, geometry, ...) } to equal { Object (business_status, geometry, ...) }
+      + expected - actual
+
+
+      at captureUserInvocationStack (http://localhost:8081/__cypress/runner/cypress_runner.js:134308:102)
+      at Proxy.<anonymous> (http://localhost:8081/__cypress/runner/cypress_runner.js:134338:9)
+      at Proxy.assertEqual (http://localhost:8081/__cypress/runner/cypress_runner.js:75303:12)
+      at Proxy.methodWrapper (http://localhost:8081/__cypress/runner/cypress_runner.js:81770:25)
+      at Context.<anonymous> (http://localhost:8081/__cypress/src/static/js/spec-3.chunk.js:160:59)
+      at getRet (http://localhost:8081/__cypress/runner/cypress_runner.js:138955:20)
+      at tryCatcher (http://localhost:8081/__cypress/runner/cypress_runner.js:11318:23)
+      at Promise.attempt.Promise.try (http://localhost:8081/__cypress/runner/cypress_runner.js:8592:29)
+      at Context.thenFn (http://localhost:8081/__cypress/runner/cypress_runner.js:138969:63)
+      at Context.then (http://localhost:8081/__cypress/runner/cypress_runner.js:139391:21)
+
+
+
+webpack compiled [1m[32msuccessfully[39m[22m
+
+  (Results)
+
+  ┌────────────────────────────────────────────────────────────────────────────────────────────────┐
+  │ Tests:        4                                                                                │
+  │ Passing:      3                                                                                │
+  │ Failing:      1                                                                                │
+  │ Pending:      0                                                                                │
+  │ Skipped:      0                                                                                │
+  │ Screenshots:  1                                                                                │
+  │ Video:        true                                                                             │
+  │ Duration:     1 second                                                                         │
+  │ Spec Ran:     AttractionList.cy.js                                                             │
+  └────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+
+  (Screenshots)
+
+  -  /Users/irinaperetazko/Desktop/Makers/RoadTripPlanner/frontend/cypress/screenshot     (1280x720)
+     s/attractions/AttractionList.cy.js/AttractionList component -- when save button                
+     is clicked on check a request (failed).png                                                     
+
+
+  (Video)
+
+  -  Started processing:  Compressing to 32 CRF                                                     
+  -  Finished processing: /Users/irinaperetazko/Desktop/Makers/RoadTripPlanner/fronte    (0 seconds)
+                          nd/cypress/videos/attractions/AttractionList.cy.js.mp4                    
+
+
+────────────────────────────────────────────────────────────────────────────────────────────────────
+                                                                                                    
+  Running:  SignUpForm.cy.js                                                                (5 of 5)
+webpack compiled [1m[32msuccessfully[39m[22m
+
+
+  Signing up
+    ✓ calls the /users endpoint (1176ms)
+
+
+  1 passing (1s)
+
+
+  (Results)
+
+  ┌────────────────────────────────────────────────────────────────────────────────────────────────┐
+  │ Tests:        1                                                                                │
+  │ Passing:      1                                                                                │
+  │ Failing:      0                                                                                │
+  │ Pending:      0                                                                                │
+  │ Skipped:      0                                                                                │
+  │ Screenshots:  0                                                                                │
+  │ Video:        true                                                                             │
+  │ Duration:     1 second                                                                         │
+  │ Spec Ran:     SignUpForm.cy.js                                                                 │
+  └────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+
+  (Video)
+
+  -  Started processing:  Compressing to 32 CRF                                                     
+  -  Finished processing: /Users/irinaperetazko/Desktop/Makers/RoadTripPlanner/fronte    (0 seconds)
+                          nd/cypress/videos/user/SignUpForm.cy.js.mp4                               
+
+
+====================================================
+
+  (Run Finished)
+
+
+       Spec                                              Tests  Passing  Failing  Pending  Skipped  
+  ┌────────────────────────────────────────────────────────────────────────────────────────────────┐
+  │ ✔  LoginForm.cy.js                          00:01        1        1        -        -        - │
+  ├────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ ✔  JourneyForm.cy.js                        00:06        5        5        -        -        - │
+  ├────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ ✔  Attraction.cy.js                         508ms        4        4        -        -        - │
+  ├────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ ✖  AttractionList.cy.js                     00:01        4        3        1        -        - │
+  ├────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ ✔  SignUpForm.cy.js                         00:01        1        1        -        -        - │
+  └────────────────────────────────────────────────────────────────────────────────────────────────┘
+    ✖  1 of 5 failed (20%)                      00:10       15       14        1        -        -  
+

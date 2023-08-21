@@ -1,12 +1,9 @@
         import React, { useState, useLayoutEffect } from 'react';
         import Attraction from './Attraction';
 
-        const AttractionList = ({ navigate, attractions, disableClicks, disableNextButton, submitAttractions, startLocation, endLocation} ) => {
+        const AttractionList = ({ navigate, attractions, startLocation, endLocation, hideSave, savedTripName} ) => {
             const [attractionsWithId, setAttractionsWithId] = useState([]);
             const [tripName, setTripName] = useState('');
-            const [showAttractions, setShowAttractions] = useState(true);
-            const [showSaveForm, setShowSaveForm] = useState(false);
-
             useLayoutEffect(() =>{
                 let newAttractionsArray = []
                 
@@ -23,26 +20,23 @@
                 setAttractionsWithId(updatedattractionsWithId);
             }
 
-            const handleNextButtonClick = (event) => {
-                event.preventDefault();
-                setShowAttractions(false);
-                setShowSaveForm(true);
-                
-            }
+            
             const handleSaveButtonClick = async () => {
-                if (tripName.trim() !== '') {
-                    let finalAttractionsList = []
+                
+                let finalAttractionsList = []
                 for (let i = 0; i < attractionsWithId.length; i++){
                     if (attractionsWithId[i].selected){
                         finalAttractionsList.push(attractionsWithId[i].attraction)
+                        
                     }
+    
                 } 
-                submitAttractions(finalAttractionsList);
+                
                 const tripData = {
                     tripName: tripName,
                     startLocation: startLocation,
                     endLocation: endLocation,
-                    attractions: finalAttractionsList
+                    attractions: finalAttractionsList,
                 };
 
                 try {
@@ -50,6 +44,7 @@
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
+                            'authorization': window.localStorage.getItem('token')
                         },
                         body: JSON.stringify(tripData),
                     });
@@ -64,23 +59,22 @@
                     console.error('Error saving trip:', error);
                 }
             }
-        };
+        
 
             return (
                 <div>
-            {showAttractions && (
-                <div>
-                    {attractionsWithId.map(attractionWithId => (
-                        <div key={attractionWithId.id}>
-                            <Attraction id={attractionWithId.id} attraction={attractionWithId.attraction} disableClick={disableClicks} attractionClicked={attractionClicked} />
-                        </div>
-                    ))}
-                    {!disableNextButton && <button onClick={handleNextButtonClick} className="nextButton"> Next </button>}
-                </div>
-            )}
-
-            {showSaveForm && (
-                <div>
+                    <h1>Planner</h1>
+                    {!hideSave? null: <h2 id="finalTripName"> Trip name : {savedTripName} </h2>}
+                    <div>
+                        <h2 className = "startLocation">Start location: {startLocation}</h2>
+                        {attractionsWithId.map(attractionWithId => (
+                            <div key={attractionWithId.id}>
+                                <Attraction id={attractionWithId.id} attraction={attractionWithId.attraction} attractionClicked={attractionClicked} disableClick={hideSave} />
+                            </div>
+                        ))}
+                        <h2 className = "endLocation">End location: {endLocation}</h2>   
+                    </div>
+                    {hideSave? null:
                     <input
                         type="text"
                         placeholder="Enter trip name"
@@ -88,12 +82,13 @@
                         className="tripname"
                         onChange={(e) => setTripName(e.target.value)}
                     />
-                    <button onClick={handleSaveButtonClick} className="saveButton" disabled={tripName.trim() === ''}>
+                    }
+                    {hideSave? null:<button onClick={handleSaveButtonClick} className="saveButton" disabled={tripName.trim() === ''}>
                         Save
-                    </button>
-                </div>
-            )}
-        </div>
-    )
+                    </button>}
+                    
+            
+            </div>
+        )
 }
         export default AttractionList;
