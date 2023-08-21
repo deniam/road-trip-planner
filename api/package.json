@@ -13,10 +13,13 @@
     "node": ">=18.1.0"
   },
   "dependencies": {
+    "callback-fetch": "^0.0.1",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
+    "dotenv": "^16.3.1",
     "express": "~4.16.1",
     "express-session": "^1.17.2",
+    "fetch": "^1.1.0",
     "hbs": "^4.1.0",
     "http-errors": "~1.6.3",
     "jsonwebtoken": "^9.0.0",
@@ -24,14 +27,22 @@
     "mongodb": "^3.4.1",
     "mongoose": "^5.8.11",
     "morgan": "~1.9.1",
+    "node-fetch": "^2.6.12",
     "nodemon": "^2.0.15",
     "superagent": "^8.0.0",
     "supertest": "^6.2.4"
   },
   "devDependencies": {
-    "jest": "^27.5.1"
+    "jest": "^27.5.1",
+    "jest-fetch-mock": "^3.0.3"
   },
   "nodemonConfig": {
     "ext": "js,hbs"
-  }
+  },
+  "main": "app.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "keywords": [],
+  "author": ""
 }

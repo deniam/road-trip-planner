@@ -5,8 +5,11 @@ describe("Signing up", () => {
     cy.get("#username").type("test_username");
     cy.get("#password").type("password");
     cy.get("#submit").click();
+    cy.wait(500).then(() => {
+      cy.url().should("include", "/planner");
+    })
 
-    cy.url().should("include", "/planner");
+    
   });
 
   it("with missing password, redirects to '/signup'", () => {
