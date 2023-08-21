@@ -8,6 +8,7 @@ const tokenChecker = require("./middleware/TokenChecker");
 const authenticationRouter = require("./routes/authentication");
 const usersRouter = require("./routes/users");
 const tripsRouter = require("./routes/trips");
+const attractionsRouter = require("./routes/attractions");
 const app = express();
 
 // setup for receiving JSON
@@ -18,7 +19,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/trips", tokenChecker, tripsRouter);
 app.use("/tokens", authenticationRouter);
 app.use("/users", usersRouter);
-// app.use("/attractions", attractionsRouter); 
+app.use("/attractions", attractionsRouter); 
 
 
 // catch 404 and forward to error handler
