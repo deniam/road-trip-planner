@@ -21,8 +21,8 @@
             }
 
             
-            const handleSaveButtonClick = async () => {
-                
+            const handleSaveButtonClick = async (event) => {
+                event.preventDefault();
                 let finalAttractionsList = []
                 for (let i = 0; i < attractionsWithId.length; i++){
                     if (attractionsWithId[i].selected){
@@ -44,7 +44,7 @@
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
-                            'authorization': window.localStorage.getItem('token')
+                            'Authorization': `Bearer ${window.localStorage.getItem("token")}`
                         },
                         body: JSON.stringify(tripData),
                     });
@@ -63,7 +63,7 @@
 
             return (
                 <div className="attractionList">
-                    {!hideSave? null: <h2 id="finalTripName"> Trip name : {savedTripName} </h2>}
+                    {hideSave? <h2 id="finalTripName"> Trip name : {savedTripName} </h2>:null}
                     <div>
                         <h2 className = "startLocation">Start location: {startLocation}</h2>
                         {attractionsWithId.map(attractionWithId => (

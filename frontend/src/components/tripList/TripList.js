@@ -13,7 +13,7 @@ const TripList = () => {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
-                        'authorization': window.localStorage.getItem('token')
+                        'Authorization': `Bearer ${window.localStorage.getItem("token")}`
                     }
                 });
                 if (response.status !== 201) {

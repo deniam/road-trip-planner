@@ -6,7 +6,6 @@ const JourneyForm = ({ navigate, submitLocations } ) => {
   const [endLocation, setEndLocation] = useState("");
 
   const handleSubmit = async (event) => {
-    event.preventDefault();
     let locations = [startLocation];
     for (let i = 0; i < waypoints.length; i++) {
         if (waypoints[i].value !== ''){
@@ -14,15 +13,15 @@ const JourneyForm = ({ navigate, submitLocations } ) => {
         }
     }
     locations.push(endLocation);
-    
-    let response = await fetch( '/attractions', {
-      method: 'post',
+    event.preventDefault();
+    let response = await fetch( "/attractions", {
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${window.localStorage.getItem("token")}`
       },
       body: JSON.stringify({ locations:locations })
     })
-  
     if(response.status !== 201) {
       navigate('/planner')
     } else {
