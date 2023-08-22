@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import './Attraction.css';
+import { Button, Typography } from '@mui/material';
 
 const Attraction = ({id, attraction, attractionClicked, disableClick}) => {
     const [clicked, setClicked] = useState(false);
@@ -14,16 +16,30 @@ const Attraction = ({id, attraction, attractionClicked, disableClick}) => {
         setClicked(clickState);
         attractionClicked(id, clickState);
     }
-  
-      return (
-        <button id={id} disabled={disableClick} onClick={handleClick} className="Attraction">
+
+    return (
+        <Button 
+            id={id}
+            disabled={disableClick}
+            onClick={handleClick} 
+            className={clicked ? 'Attraction clicked' : 'Attraction'}
+            variant="outlined" 
+        >
             <div>
-                <p className="name">{attraction.name}</p>
-                <p className='address'>{attraction.vicinity}</p>
-                <p className='rating'>{attraction.rating}</p>
+            <Typography variant="h6" gutterBottom>
+                {attraction.name} 
+            </Typography>
+            
+            <Typography variant="body1" className='address'>
+                {attraction.vicinity}
+            </Typography>
+            
+            <Typography variant="body2" className='rating'>
+                Rating: {attraction.rating}
+            </Typography>
             </div>
-        </button>
-      );
-  }
-  
-  export default Attraction;
+        </Button>
+        );
+}
+
+export default Attraction;

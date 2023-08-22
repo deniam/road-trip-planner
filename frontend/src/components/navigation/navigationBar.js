@@ -33,7 +33,7 @@ const NavigationBar = () => {
                     {isLoggedIn ? (
                         <>
                         <CustomNavLink to="/planner" data-testid="planner">Planner</CustomNavLink>
-                        <CustomNavLink to="/trips" data-testid="trips">My Trips</CustomNavLink>
+                        <CustomNavLink to="/myTrips" data-testid="trips">My Trips</CustomNavLink>
                         <Button color="inherit" data-testid="logout" onClick={() => handleLogout(navigate)}>
                             Logout
                         </Button>

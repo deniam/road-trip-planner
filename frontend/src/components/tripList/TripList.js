@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Typography, Paper, Container } from '@mui/material';
 import AttractionList from '../attractions/AttractionList';
 
 const TripList = () => {
@@ -13,7 +14,7 @@ const TripList = () => {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
-                        'authorization': window.localStorage.getItem('token')
+                        'Authorization': `Bearer ${window.localStorage.getItem('token')}`,
                     }
                 });
                 if (response.status !== 201) {
@@ -36,16 +37,17 @@ const TripList = () => {
         
 
     return (
-        <div className='myTrips'>
+        <Container maxWidth="md" sx={{ py: 4 }}>
             {trips.map((trip, index) => (
-                <div key={index}>
-                    <AttractionList attractions={trip.attractions} startLocation={trip.startLocation} endLocation={trip.endLocation} hideSave={"ON"} savedTripName={trip.tripName}/>
-                </div>
+                <Paper elevation={3} key={index} sx={{ p: 2, my: 2 }}>
+                    <Typography variant="h6" className='savedTripName'>
+                        {trip.tripName}
+                    </Typography>
+                    <AttractionList attractions={trip.attractions} startLocation={trip.startLocation} endLocation={trip.endLocation} hideSave={"ON"} />
+                </Paper>
             ))}
-        </div>
-
-    )
-
-}
+        </Container>
+    );
+};
 
 export default TripList;

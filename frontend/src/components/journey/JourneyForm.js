@@ -1,4 +1,5 @@
-import React, { useState} from 'react';
+import React, { useState } from 'react';
+import { Button, TextField, Typography } from '@mui/material';
 
 const JourneyForm = ({ navigate, submitLocations } ) => {
   const [waypoints, setWaypoints] = useState([]);
@@ -19,6 +20,7 @@ const JourneyForm = ({ navigate, submitLocations } ) => {
       method: 'post',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${window.localStorage.getItem("token")}`
       },
       body: JSON.stringify({ locations:locations })
     })
@@ -53,25 +55,52 @@ const JourneyForm = ({ navigate, submitLocations } ) => {
   };
  
 
-    return (
-      <form onSubmit={handleSubmit} className='journeyForm'>
-        <input placeholder="Start Location" id="startLocation" type='text' value={ startLocation } onChange={handleStartLocationChange} required />
-        {waypoints.map(waypoint => (
-          <div key={waypoint.id}>
-            <input
-              className ="waypoint"
-              type="text"
-              id={waypoint.id}
-              value={waypoint.value}
-              onChange={e => handleWaypointChange(waypoint.id, e.target.value)}
-            />
-          </div>
+  return (
+    <form onSubmit={handleSubmit} className='journeyForm'>
+        <TextField
+            label="Start Location"
+            id="startLocation"
+            type='text'
+            value={startLocation}
+            onChange={handleStartLocationChange}
+            variant="outlined"
+            required
+        />
+        {waypoints.map((waypoint) => (
+            <div key={waypoint.id}>
+                <TextField
+                    className='waypoint'
+                    label={`Waypoint ${waypoint.id}`}
+                    type='text'
+                    id={waypoint.id}
+                    value={waypoint.value}
+                    onChange={(e) => handleWaypointChange(waypoint.id, e.target.value)}
+                    variant="outlined"
+                />
+            </div>
         ))}
-        <button id="addWaypoint" type="button" onClick={handleAddField}>Add Waypoint</button>
-        <input placeholder="End Location" id="endLocation" type='text' value={ endLocation } onChange={handleEndLocationChange} required/>
-      <input id='submit' type="submit" value="Submit" />
-      </form>
-    );
-}
+        <Button
+            id='addWaypoint'
+            type='button'
+            variant="outlined"
+            onClick={handleAddField}
+        >
+            Add Waypoint
+        </Button>
+        <TextField
+            label="End Location"
+            id="endLocation"
+            type='text'
+            value={endLocation}
+            onChange={handleEndLocationChange}
+            variant="outlined"
+            required
+        />
+        <Button id='submit' type="submit" variant="contained">
+            Submit
+        </Button>
+    </form>
+);
+};
 
 export default JourneyForm;

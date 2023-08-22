@@ -1,0 +1,22 @@
+button {
+    margin-bottom: 25px;
+}
+
+.Attraction {
+    width: 300px;
+    background-color: #fff; 
+    border: 10px solid #ccc;
+    padding: 5px !important;
+}
+
+.Attraction.clicked {
+background-color: #e3f2fd;
+border-color: #0086f3;
+border: 2px solid
+}
+
+@media (max-width: 600px) {
+.Attraction {
+    width: 100%;
+}
+}
