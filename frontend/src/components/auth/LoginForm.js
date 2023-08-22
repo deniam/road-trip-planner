@@ -1,8 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const LogInForm = ({ navigate }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  useEffect(() => {
+    if (window.localStorage.getItem("token") != null){
+        navigate('/planner')
+    };
+});
 
   const handleSubmit = async (event) => {
     event.preventDefault();
