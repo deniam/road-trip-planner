@@ -57,7 +57,7 @@ describe("creating and then viewing a trip", () => {
                     cy.get('.saveButton').should('not.exist');
                     cy.get('.tripname').should('not.exist');
                     cy.get('.Attraction').then(count => {
-                        for (let i = 0; i < count; i++) {
+                        for (let i = 0; i < 3; i++) {
                             cy.get(`#${i}`).should('be.disabled');
                             // eslint-disable-next-line no-loop-func
                             cy.get(`#${i}`).within(() => {
@@ -123,7 +123,7 @@ describe("creating and then viewing a trip", () => {
                     cy.get('.saveButton').should('not.exist');
                     cy.get('.tripname').should('not.exist');
                     cy.get('.Attraction').then(count => {
-                        for (let i = 0; i < count; i++) {
+                        for (let i = 0; i < 3; i++) {
                             cy.get(`#${i}`).should('be.disabled');
                             // eslint-disable-next-line no-loop-func
                             cy.get(`#${i}`).within(() => {
