@@ -18,6 +18,7 @@ const mockTrip2 = {
 describe("Trip list component", () => {
     describe("has a list of AttractionList components", () => {
         it("when rendered", () => {
+            window.localStorage.setItem('token', 'abc' );
             cy.intercept('GET', '/users', (req) => {
                 req.reply({
                   statusCode: 201,
@@ -77,11 +78,48 @@ describe("Trip list component", () => {
                 })
 
                 cy.wait('@getTrips').then( interception => {
-                    expect(interception.response.body.token).to.eq("fakeToken")
+                    expect(interception.request.headers.authorization).contains('abc');
                 })
 
             })
 
+        })
+    })
+
+    describe("displays no attraction list components", () => {
+        it("when there are no trips stored for user", () => {
+            window.localStorage.setItem('token', 'abc' );
+            cy.intercept('GET', '/users', (req) => {
+                req.reply({
+                    statusCode: 201,
+                    body:{
+                        token: "fakeToken", 
+                        username: 'Gary', 
+                        trips: []
+                    }
+                })
+            }).as("getTrips")
+            cy.mount(<TripList/>)
+            cy.get(".attractionList").should('not.exist');
+
+            cy.wait('@getTrips').then( interception => {
+                expect(interception.request.headers.authorization).contains('abc');
+            })    
+        })
+
+        it("when there is an api error", () => {
+            window.localStorage.setItem('token', 'abc' );
+            cy.intercept('GET', '/users', (req) => {
+                req.reply({
+                  statusCode: 400
+                })
+              }).as("getTrips")
+            cy.mount(<TripList/>)
+            cy.get(".attractionList").should('not.exist');
+
+            cy.wait('@getTrips').then( interception => {
+                expect(interception.request.headers.authorization).contains('abc');
+            })    
         })
     })
 })

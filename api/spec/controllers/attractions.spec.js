@@ -35,17 +35,6 @@ describe('POST', () => {
     expect(response.statusCode).toEqual(401);
   
   });
-
-  //test('When given two string locations return an array of locations objects with the nearest location first and no duplicates', async () => {
-    
-  //  let response = await request(app)
-  //    .post('/attractions')
-  //    .set("Authorization", `Bearer ${token}`)
-  //    .send({locations:["Hackney Farm", "Windsor Castle"]})
-  //  expect(response.statusCode).toBe(201);
-  //  expect(response.body.attractions).toEqual([singlePlaceMock[1], singlePlaceMock[3], singlePlaceMock[2],singlePlaceMock[4], singlePlaceMock[0] ])
-
-  //});
   
 });
 

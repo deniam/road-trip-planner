@@ -11,7 +11,7 @@
                     newAttractionsArray.push({id:i, attraction:attractions[i], selected: false})
                 } 
                 setAttractionsWithId(newAttractionsArray)
-            }, [])
+            }, [attractions])
 
             const attractionClicked = (id, selected) =>{
                 const updatedattractionsWithId = attractionsWithId.map(attractionWithId =>

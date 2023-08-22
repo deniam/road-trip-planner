@@ -20,7 +20,6 @@ const TripList = () => {
                     throw new Error('Error retrieving trips:');
                 } else {
                     const data = await response.json();
-                    console.log(data);
                     window.localStorage.setItem('token', data.token);
                     setTrips(data.trips);
                     setUsername(data.username);
