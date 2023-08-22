@@ -1,44 +1,70 @@
-// cypress/integration/navigationBar.spec.js
-describe('Navigation Bar', () => {
+import NavigationBar from "./navigationBar";
+import { MemoryRouter } from "react-router-dom";
+import SignUpForm from '../user/SignUpForm'
+import LoginForm from "../auth/LoginForm";
+const navigate = () => { }
 
-  it('should navigate to Sign Up when on /login', () => {
-    cy.get('login')  
-    cy.click();
-    cy.contains('Sign Up');
+
+describe("User not logged in", () => {
+  it('should navigate to the Sign Up when the user clicks Sign Up on /login', () => {
+    cy.mount(<MemoryRouter initialEntries={["/login"]}>
+      <NavigationBar navigate={navigate}/>
+    </MemoryRouter>)
+    cy.contains('Sign Up').click();
+    cy.contains('Login');
   });
 
-  // it('should navigate to Login when on /signup', () => {
-  //     cy.visit('/signup');
-  //     cy.contains('Login').should('exist');
-  // });
+  it('should navigate to the Login page when the user clicks Login on /signup', () => { 
+    cy.mount(<MemoryRouter initialEntries={["/signup"]}>
+      <NavigationBar navigate={navigate}/>
+    </MemoryRouter>)
+    cy.contains('Login').click();
+    cy.contains('Sign Up');
+  })
 
-  // it('should show Planner and My Trips when on /planner', () => {
-  //     cy.visit('/planner');
-  //     cy.contains('Planner').should('exist');
-  //     cy.contains('My Trips').should('exist');
-  // });
+  it('should not contain links to Planner, My Trips or Logout', () => { 
+    cy.mount(<MemoryRouter initialEntries={["/"]}>
+      <NavigationBar navigate={navigate}/>
+    </MemoryRouter>)
+    cy.get('Planner').should('not.exist');
+    cy.get('My Trips').should('not.exist');
+    cy.get('Logout').should('not.exist');
+  })
+})
 
-  // it('should show Planner and My Trips when on /trips', () => {
-  //     cy.visit('/trips');
-  //     cy.contains('Planner').should('exist');
-  //     cy.contains('My Trips').should('exist');
-  // });
 
-  // it('should show Logout when logged in', () => {
-  //     // Log in first
-  //     cy.visit('/login');
-  //     // Fill in login form and submit
-  //     cy.get('input[name="username"]').type('your_username');
-  //     cy.get('input[name="password"]').type('your_password');
-  //     cy.contains('Login').click();
-
-  //     cy.visit('/planner'); // You can test this on other routes as well
-  //     cy.contains('Logout').should('exist');
-  // });
-
-  // it('should show Login and Sign Up when not logged in', () => {
-  //     cy.visit('/'); // Assuming visiting the homepage redirects to /login
-  //     cy.contains('Login').should('exist');
-  //     cy.contains('Sign Up').should('exist');
-  // });
+describe('Navigation Bar when a user is logged in', () => {
+beforeEach(() => {
+  cy.window().its('localStorage').invoke('setItem', 'token', 'fakeToken');
 });
+
+  it('should navigate to the my Trips page when the user clicks on My Trips on /planner', () => {
+    cy.mount(<MemoryRouter initialEntries={["/planner"]}>
+      <NavigationBar navigate={navigate}/>
+    </MemoryRouter>)
+    cy.contains('My Trips').click();
+    cy.contains('Planner');
+    cy.contains('Logout');
+  })
+
+  it('should navigate to the Planner page when the user clicks on Planner on /trips', () => {
+    cy.mount(<MemoryRouter initialEntries={["/trips"]}>
+      <NavigationBar navigate={navigate}/>
+    </MemoryRouter>)
+    cy.contains('Planner').click();
+    cy.contains('My Trips');
+    cy.contains('Logout');
+  })
+    
+  
+  it('when a user is logged in the navbar does not show the Log In or Sign Up buttons', () => {
+    cy.mount(<MemoryRouter initialEntries={["/"]}>
+      <NavigationBar navigate={navigate}/>
+    </MemoryRouter>)
+    cy.get('Login').should('not.exist');
+    cy.get('Sign Up').should('not.exist');
+
+  })
+});
+
+
