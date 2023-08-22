@@ -27,4 +27,3 @@ const Attraction = ({id, attraction, attractionClicked, disableClick}) => {
   }
   
   export default Attraction;
-  

@@ -11,7 +11,7 @@
                     newAttractionsArray.push({id:i, attraction:attractions[i], selected: false})
                 } 
                 setAttractionsWithId(newAttractionsArray)
-            }, [])
+            }, [attractions])
 
             const attractionClicked = (id, selected) =>{
                 const updatedattractionsWithId = attractionsWithId.map(attractionWithId =>
@@ -63,7 +63,6 @@
 
             return (
                 <div className="attractionList">
-                    <h1>Planner</h1>
                     {!hideSave? null: <h2 id="finalTripName"> Trip name : {savedTripName} </h2>}
                     <div>
                         <h2 className = "startLocation">Start location: {startLocation}</h2>

@@ -31,7 +31,7 @@ describe("/trips", () => {
         test("the response code is 201 and valid trip object is added to the trips array and token comes back", async () => {
             let response = await request(app)
             .post("/trips")
-            .set("Authorization", `Bearer ${token}`)
+            .set("authorization", `Bearer ${token}`)
             .send({tripName: "Trip1", startLocation: "Stop 1", endLocation: "Stop 2", attractions: ["1", "2", "3"], token: token})
             let users = await User.find();
             expect(response.statusCode).toBe(201);
@@ -59,7 +59,7 @@ describe("/trips", () => {
         test("the response code is 400 and valid trip object is no added to the trips array", async () => {
             let response = await request(app)
             .post("/trips")
-            .set("Authorization", `Bearer ${token}`)
+            .set("authorization", `Bearer ${token}`)
             .send({test: "Trip1", hello: "Stop 1", fail: "Stop 2", fail1: ["1", "2", "3"], token: token})
             let users = await User.find();
             expect(response.statusCode).toBe(500);

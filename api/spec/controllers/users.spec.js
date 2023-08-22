@@ -112,7 +112,7 @@ describe("/users", () => {
     test("the response code is 201 and trips and username are returned when called with a valid token", async () => {
         let response = await request(app)
           .get("/users")
-          .set("Authorization", `Bearer ${token}`)
+          .set("authorization", `Bearer ${token}`)
         expect(response.statusCode).toBe(201)
         expect(response.body.username).toBe("myusername");
         expect(response.body.trips).toEqual(["mock1", "mock2"]);
@@ -121,14 +121,14 @@ describe("/users", () => {
     test("the response code is 500 when called with an invalid token", async () => {
       let response = await request(app)
         .get("/users")
-        .set("Authorization", `Bearer ${"horse"}`)
+        .set("authorization", `Bearer ${"horse"}`)
       expect(response.statusCode).toBe(401);
   })
   test("the response code is 401 is returned for a user that does not exist", async () => {
     await User.deleteMany({});
     let response = await request(app)
       .get("/users")
-      .set("Authorization", `Bearer ${token}`)
+      .set("authorization", `Bearer ${token}`)
     expect(response.statusCode).toBe(400);
 })
 });
