@@ -70,10 +70,11 @@ const AttractionList = ({ navigate, attractions, startLocation, endLocation, hid
         <Container maxWidth="sm" sx={{ display: 'flex', padding: 3, justifyContent: 'center' }}>
             <Paper className="attractionList" 
                 sx={{ 
-                display: 'flex', 
-                flexDirection: 'column', 
-                alignItems: 'center',
-                height: 'min-content' }}>
+                    display: 'flex', 
+                    flexDirection: 'column', 
+                    alignItems: 'center',
+                    height: 'min-content' }}>
+                        <Typography variant="h6" component="div" sx={{ flexGrow: 1, fontFamily: 'monospace', fontWeight: 700 }}>Select attractions</Typography>
                 {!hideSave? null: <h2 id="finalTripName"> Trip name : {savedTripName} </h2>}
                     <Box sx={{ mb: 2 }}>
                     <Typography variant="h5" className = "startLocation">Start location: {startLocation}</Typography>

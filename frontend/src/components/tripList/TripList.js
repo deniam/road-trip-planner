@@ -40,10 +40,10 @@ const TripList = () => {
     return (
         <Container className="myTrips" maxWidth="md" sx={{ py: 3, 
         display: 'flex', 
-        width: 0, 
         flexDirection: 'column', 
         alignItems: 'center',
-        height: 'min-content' }}>
+        height: 'min-content'}}>
+            <Typography variant="h6" component="div" sx={{ flexGrow: 0.25, fontFamily: 'monospace', fontWeight: 700 }}>My Trips</Typography>
             {trips.map((trip) => (
                 <div>
                     <AttractionList savedTripName={trip.tripName} attractions={trip.attractions} startLocation={trip.startLocation} endLocation={trip.endLocation} hideSave={"ON"} />
