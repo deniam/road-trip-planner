@@ -57,7 +57,7 @@ const JourneyForm = ({ navigate, submitLocations } ) => {
     <Container maxWidth="sm" sx={{ display: 'flex', padding: 3, justifyContent: 'center', height: '100vh' }}>
     <Paper sx={{ 
         width: { xs: '100%', md: 300 }, 
-        height: { xs: '35%', md: 350 }, 
+        height: 'min-content', 
         padding: 3, 
         display: 'flex', 
         flexDirection: 'column', 

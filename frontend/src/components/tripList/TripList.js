@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Typography, Paper, Container } from '@mui/material';
 import AttractionList from '../attractions/AttractionList';
+import { Diversity1 } from '@mui/icons-material';
 
 const TripList = () => {
     const [trips, setTrips] = useState([]);
@@ -37,14 +38,16 @@ const TripList = () => {
         
 
     return (
-        <Container className="myTrips" maxWidth="md" sx={{ py: 3, display: 'flex', 
+        <Container className="myTrips" maxWidth="md" sx={{ py: 3, 
+        display: 'flex', 
+        width: 0, 
         flexDirection: 'column', 
         alignItems: 'center',
         height: 'min-content' }}>
-            {trips.map((trip, index) => (
-                <Paper elevation={3} key={index} sx={{ p: 1, my: 2,  }}>
+            {trips.map((trip) => (
+                <div>
                     <AttractionList savedTripName={trip.tripName} attractions={trip.attractions} startLocation={trip.startLocation} endLocation={trip.endLocation} hideSave={"ON"} />
-                </Paper>
+                </div>
             ))}
         </Container>
     );

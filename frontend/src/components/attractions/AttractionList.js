@@ -67,10 +67,9 @@ const AttractionList = ({ navigate, attractions, startLocation, endLocation, hid
 
 
     return (
-        <Container maxWidth="sm" sx={{ display: 'flex', padding: 3, justifyContent: 'center', height: 'min-content' }}>
+        <Container maxWidth="sm" sx={{ display: 'flex', padding: 3, justifyContent: 'center' }}>
             <Paper className="attractionList" 
                 sx={{ 
-                width: { xs: '100%', md: 300 }, 
                 display: 'flex', 
                 flexDirection: 'column', 
                 alignItems: 'center',
@@ -97,7 +96,7 @@ const AttractionList = ({ navigate, attractions, startLocation, endLocation, hid
                     sx={{ mb: 2 }}
                 />
                 }
-                {hideSave? null:<Button variant="contained" onClick={handleSaveButtonClick} className="saveButton" sx={{ mb: 10 }} disabled={tripName.trim() === ''}>
+                {hideSave? null:<Button variant="contained" onClick={handleSaveButtonClick} className="saveButton" sx={{ mb: 10, width: { xs: '35%', md: 100 },  }} disabled={tripName.trim() === ''}>
                     Save
                 </Button>}
 
