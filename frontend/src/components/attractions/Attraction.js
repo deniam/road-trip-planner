@@ -26,7 +26,7 @@ const Attraction = ({id, attraction, attractionClicked, disableClick}) => {
             variant="outlined" 
         >
             <div>
-            <Typography variant="h6" gutterBottom>
+            <Typography variant="h6" gutterBottom className='name'>
                 {attraction.name} 
             </Typography>
             

@@ -1,14 +1,16 @@
 describe("Signing in", () => {
 
   before(() => {
-    cy.signup("user@email.com", "12345678", "username")
+    cy.signup("someone@example.com", "password1", "username")
   })
 
   it("with valid credentials, redirects to '/planner'", () => {
-    cy.visit("/login");
-    cy.get("#email").type("someone@example.com");
-    cy.get("#password").type("password");
-    cy.get("#submit").click();
+    cy.get("#logoutbutton").click();
+    cy.wait(5000).then(() => {
+      cy.get("#email").type("someone@example.com");
+      cy.get("#password").type("password1");
+      cy.get("#submit").click();
+  })
 
     cy.wait(500).then(() => {
       cy.url().should("include", "/planner");

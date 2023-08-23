@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, TextField, Typography } from '@mui/material';
+import { Button, TextField, Typography, Container, Paper, Box } from '@mui/material';
 
 const JourneyForm = ({ navigate, submitLocations } ) => {
   const [waypoints, setWaypoints] = useState([]);
@@ -56,7 +56,21 @@ const JourneyForm = ({ navigate, submitLocations } ) => {
  
 
   return (
+    <Container maxWidth="sm" sx={{ display: 'flex', padding: 3, justifyContent: 'center', height: '100vh' }}>
+    <Paper sx={{ 
+        width: { xs: '100%', md: 300 }, 
+        height: { xs: '35%', md: 350 }, 
+        padding: 3, 
+        display: 'flex', 
+        flexDirection: 'column', 
+        alignItems: 'center' }}>
     <form onSubmit={handleSubmit} className='journeyForm'>
+      <Box sx={{
+        display: 'flex', 
+        flexDirection: 'column', 
+        alignItems: 'center',
+        justifyContent: 'space-between'
+        }} >
         <TextField
             label="Start Location"
             id="startLocation"
@@ -64,6 +78,7 @@ const JourneyForm = ({ navigate, submitLocations } ) => {
             value={startLocation}
             onChange={handleStartLocationChange}
             variant="outlined"
+            sx={{ mb: 2 }}
             required
         />
         {waypoints.map((waypoint) => (
@@ -76,6 +91,7 @@ const JourneyForm = ({ navigate, submitLocations } ) => {
                     value={waypoint.value}
                     onChange={(e) => handleWaypointChange(waypoint.id, e.target.value)}
                     variant="outlined"
+                    sx={{ mb: 2 }}
                 />
             </div>
         ))}
@@ -84,6 +100,7 @@ const JourneyForm = ({ navigate, submitLocations } ) => {
             type='button'
             variant="outlined"
             onClick={handleAddField}
+            sx={{ mb: 2 }}
         >
             Add Waypoint
         </Button>
@@ -94,12 +111,16 @@ const JourneyForm = ({ navigate, submitLocations } ) => {
             value={endLocation}
             onChange={handleEndLocationChange}
             variant="outlined"
+            sx={{ mb: 2 }}
             required
         />
         <Button id='submit' type="submit" variant="contained">
             Submit
         </Button>
+    </Box>
     </form>
+    </Paper>
+    </Container>
 );
 };
 

@@ -34,7 +34,7 @@ const NavigationBar = () => {
                         <>
                         <CustomNavLink to="/planner" data-testid="planner">Planner</CustomNavLink>
                         <CustomNavLink to="/myTrips" data-testid="trips">My Trips</CustomNavLink>
-                        <Button color="inherit" data-testid="logout" onClick={() => handleLogout(navigate)}>
+                        <Button color="inherit" data-testid="logout" id='logoutbutton' onClick={() => handleLogout(navigate)}>
                             Logout
                         </Button>
                         </>

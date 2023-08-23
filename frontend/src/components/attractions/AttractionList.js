@@ -1,6 +1,7 @@
 import React, { useState, useLayoutEffect } from 'react';
 import Attraction from './Attraction';
-import { Typography, Paper, Container } from '@mui/material';
+import './AttractionList.css';
+import { Container, Paper, Typography, Box, TextField, Button } from '@mui/material';
 
 const AttractionList = ({ navigate, attractions, startLocation, endLocation, hideSave, savedTripName} ) => {
     const [attractionsWithId, setAttractionsWithId] = useState([]);
@@ -41,11 +42,11 @@ const AttractionList = ({ navigate, attractions, startLocation, endLocation, hid
         };
 
         try {
-            const response = await fetch('/myTrips', {
+            const response = await fetch('/trips', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'authorization': window.localStorage.getItem('token')
+                    'Authorization': `Bearer ${window.localStorage.getItem("token")}`
                 },
                 body: JSON.stringify(tripData),
             });
@@ -63,47 +64,43 @@ const AttractionList = ({ navigate, attractions, startLocation, endLocation, hid
 
 
     return (
-    <Container maxWidth="sm">
+        <Container maxWidth="sm" sx={{ display: 'flex', padding: 3, justifyContent: 'center', height: 'min-content' }}>
+        <Paper className="attractionList" 
+            sx={{ 
+            width: { xs: '100%', md: 300 }, 
+            display: 'flex', 
+            flexDirection: 'column', 
+            alignItems: 'center',
+            height: 'min-content' }}>
+            {!hideSave? null: <h2 id="finalTripName"> Trip name : {savedTripName} </h2>}
+                <Box sx={{ mb: 2 }}>
+                <Typography variant="h5" className = "startLocation">Start location: {startLocation}</Typography>
+                </Box>
+                {attractionsWithId.map(attractionWithId => (
+                    <Box key={attractionWithId.id} className="attractionBlock" sx= {{ mb: 1.5 }} >
+                        <Attraction id={attractionWithId.id} attraction={attractionWithId.attraction} attractionClicked={attractionClicked} disableClick={hideSave} />
+                    </Box>
+                ))}
+                <Box sx={{ mb: 2 }}>
+                <Typography variant="h5" className = "endLocation">End location: {endLocation}</Typography>   
+                </Box>
+            {hideSave? null:
+            <TextField
+                type="text"
+                placeholder="Enter trip name"
+                value={tripName}
+                className="tripname"
+                onChange={(e) => setTripName(e.target.value)}
+                sx={{ mb: 2 }}
+            />
+            }
+            {hideSave? null:<Button variant="contained" onClick={handleSaveButtonClick} className="saveButton" sx={{ mb: 10 }} disabled={tripName.trim() === ''}>
+                Save
+            </Button>}
+            
     
-    {!hideSave ? (
-        <Paper elevation={3} sx={{ p: 2, mb: 2 }}>
-        <Typography variant="h6">Trip name: {savedTripName}</Typography>    
         </Paper>
-    ) : null}
-    
-    <Typography variant="subtitle1">Start location:</Typography>
-    <Typography>{startLocation}</Typography>
-    
-    {attractionsWithId.map(item => (
-        <Paper key={item.id} sx={{ p: 1, my: 1 }}>
-        <Attraction 
-            {...item}
-            attractionClicked={attractionClicked}
-            disableClick={hideSave}  
-        />
-        </Paper>
-    ))}
-    
-    <Typography variant="subtitle1">End location:</Typography>
-    <Typography>{endLocation}</Typography>
-    
-    {!hideSave ? (
-        <TextField 
-        value={tripName}
-        onChange={(e) => setTripName(e.target.value)}
-        />
-    ) : null}
-    
-    {!hideSave ? (  
-        <Button
-        onClick={handleSaveButtonClick}
-        disabled={tripName.trim() === ''} 
-        >
-        Save
-        </Button>  
-    ) : null}
-    
-    </Container>
+        </Container>
 )
 }
 export default AttractionList;

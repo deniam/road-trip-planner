@@ -37,13 +37,13 @@ const TripList = () => {
         
 
     return (
-        <Container maxWidth="md" sx={{ py: 4 }}>
+        <Container maxWidth="md" sx={{ py: 3, display: 'flex', 
+        flexDirection: 'column', 
+        alignItems: 'center',
+        height: 'min-content' }}>
             {trips.map((trip, index) => (
-                <Paper elevation={3} key={index} sx={{ p: 2, my: 2 }}>
-                    <Typography variant="h6" className='savedTripName'>
-                        {trip.tripName}
-                    </Typography>
-                    <AttractionList attractions={trip.attractions} startLocation={trip.startLocation} endLocation={trip.endLocation} hideSave={"ON"} />
+                <Paper elevation={3} key={index} sx={{ p: 1, my: 2,  }}>
+                    <AttractionList savedTripName={trip.tripName} attractions={trip.attractions} startLocation={trip.startLocation} endLocation={trip.endLocation} hideSave={"ON"} />
                 </Paper>
             ))}
         </Container>
