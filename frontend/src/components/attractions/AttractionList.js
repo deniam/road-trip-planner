@@ -67,14 +67,14 @@ const AttractionList = ({ navigate, attractions, startLocation, endLocation, hid
 
 
     return (
-        <Container maxWidth="sm" sx={{ display: 'flex', padding: 3, justifyContent: 'center', height: 'min-content' }}>
+        <Container maxWidth="sm" sx={{ display: 'flex', padding: 3, justifyContent: 'center' }}>
             <Paper className="attractionList" 
                 sx={{ 
-                width: { xs: '100%', md: 300 }, 
-                display: 'flex', 
-                flexDirection: 'column', 
-                alignItems: 'center',
-                height: 'min-content' }}>
+                    display: 'flex', 
+                    flexDirection: 'column', 
+                    alignItems: 'center',
+                    height: 'min-content' }}>
+                        <Typography variant="h6" component="div" sx={{ flexGrow: 1, fontFamily: 'monospace', fontWeight: 700 }}>Select attractions</Typography>
                 {!hideSave? null: <h2 id="finalTripName"> Trip name : {savedTripName} </h2>}
                     <Box sx={{ mb: 2 }}>
                     <Typography variant="h5" className = "startLocation">Start location: {startLocation}</Typography>
@@ -97,7 +97,7 @@ const AttractionList = ({ navigate, attractions, startLocation, endLocation, hid
                     sx={{ mb: 2 }}
                 />
                 }
-                {hideSave? null:<Button variant="contained" onClick={handleSaveButtonClick} className="saveButton" sx={{ mb: 10 }} disabled={tripName.trim() === ''}>
+                {hideSave? null:<Button variant="contained" onClick={handleSaveButtonClick} className="saveButton" sx={{ mb: 10, width: { xs: '35%', md: 100 },  }} disabled={tripName.trim() === ''}>
                     Save
                 </Button>}
 

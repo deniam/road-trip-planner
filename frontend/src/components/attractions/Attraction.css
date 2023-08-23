@@ -3,7 +3,7 @@ button {
 }
 
 .Attraction {
-    width: 300px;
+    width: 400px;
     background-color: #fff; 
     border: 2px solid #ccc;
     padding: 5px !important;
@@ -22,6 +22,17 @@ border: 2px solid
     color: rgb(255, 255, 255);
     }
 
+    .Attraction:disabled .name {
+        color: rgb(255, 255, 255);
+    }
+    
+    .Attraction:disabled .address {
+        color: rgb(247, 243, 8);
+    }
+    
+    .Attraction:disabled .rating {
+        color: rgb(255, 255, 255);
+    }
 @media (max-width: 600px) {
 .Attraction {
     width: 100%;

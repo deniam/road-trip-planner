@@ -57,11 +57,13 @@ const JourneyForm = ({ navigate, submitLocations } ) => {
     <Container maxWidth="sm" sx={{ display: 'flex', padding: 3, justifyContent: 'center', height: '100vh' }}>
     <Paper sx={{ 
         width: { xs: '100%', md: 300 }, 
-        height: { xs: '35%', md: 350 }, 
+        height: 'min-content', 
         padding: 3, 
         display: 'flex', 
         flexDirection: 'column', 
-        alignItems: 'center' }}>
+        alignItems: 'center'
+      }}>
+    <Typography variant="h6" component="div" sx={{ flexGrow: 0.25, fontFamily: 'monospace', fontWeight: 700 }}>Choose your journey</Typography>
     <form onSubmit={handleSubmit} className='journeyForm'>
       <Box sx={{
         display: 'flex', 
