@@ -1,4 +1,8 @@
 describe("Signing up", () => {
+  before ( () => {
+    cy.exec("mongosh tripPlanner_test --eval 'db.dropDatabase()'");
+  })
+
   it("with valid credentials, redirects to '/planner'", () => {
     cy.visit("/signup");
     cy.get("#email").type("someone@example.com");

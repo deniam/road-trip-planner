@@ -18,6 +18,13 @@ Cypress.Commands.add('signup', (email, password, username) => {
   cy.get("#username").type(username);
   cy.get("#submit").click();
 })
+
+Cypress.Commands.add('login', (email, password, username) => {
+  cy.visit("/login");
+  cy.get("#email").type(email);
+  cy.get("#password").type(password);
+  cy.get("#submit").click();
+})
 //
 //
 // -- This is a child command --
