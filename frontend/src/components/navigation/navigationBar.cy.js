@@ -48,7 +48,7 @@ beforeEach(() => {
   })
 
   it('should navigate to the Planner page when the user clicks on Planner on /trips', () => {
-    cy.mount(<MemoryRouter initialEntries={["/trips"]}>
+    cy.mount(<MemoryRouter initialEntries={["/myTrips"]}>
       <NavigationBar navigate={navigate}/>
     </MemoryRouter>)
     cy.contains('Planner').click();
