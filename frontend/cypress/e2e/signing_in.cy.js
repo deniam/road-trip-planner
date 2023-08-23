@@ -3,6 +3,7 @@ describe("Signing in", () => {
   before(() => {
     cy.exec("mongosh tripPlanner_test --eval 'db.dropDatabase()'");
     cy.signup("user@email.com", "12345678", "username")
+    cy.get("#logoutbutton").click()
   })
 
   it("with valid credentials, redirects to '/planner'", () => {
