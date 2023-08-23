@@ -1,4 +1,5 @@
 import React from 'react';
+import logoImage from '../../images/logo.png'; 
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router';
 import Container from '@mui/material/Container';
@@ -6,6 +7,7 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
+
 
 const handleLogout = (navigate) => {
     window.localStorage.removeItem("token")
@@ -26,9 +28,11 @@ const NavigationBar = () => {
         <AppBar position="static">
             <Container>
                 <Toolbar>
-                    <Typography variant="h5" component="div" sx={{ flexGrow: 1, fontFamily: 'monospace',  fontWeight: 700}}>
-                        Road Trip Planner
-                    </Typography>
+                <Typography variant="h4" component="div" sx={{ flexGrow: 1, fontFamily: 'monospace', fontWeight: 700 }}>
+                    <img src={logoImage} alt="Logo" style={{ height: '36px', marginRight: '10px' }} />
+                    Road Trip Planner
+                </Typography>
+
                     <div>             
                     {isLoggedIn ? (
                         <>

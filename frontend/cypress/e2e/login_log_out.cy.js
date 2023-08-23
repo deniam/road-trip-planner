@@ -1,6 +1,7 @@
-describe("Log in then log out", () => {
+describe("Checks for user logging in and out", () => {
 
     before(() => {
+      cy.exec("mongosh tripPlanner_test --eval 'db.dropDatabase()'");
       cy.signup("user@email.com", "12345678", "username")
     })
   
@@ -11,15 +12,10 @@ describe("Log in then log out", () => {
     })
     cy.contains('button','Logout').click();
     cy.url().should("include", "/login")
-        
-    cy.get("#email").type("someone@example.com");
-    cy.get("#password").type("password");
-    cy.get("#submit").click();
+      
+    cy.login("user@email.com", "12345678");
     cy.wait(500).then(() => {
         cy.url().should("include", "/planner");
     })
-        
-    
-
     });
 })
