@@ -1,7 +1,7 @@
 {
-  "name": "acebook",
+  "name": "tripplanner",
   "version": "0.0.0",
-  "description": "Template for the AceBook project",
+  "description": "Template for the tripPlanner project",
   "license": "CC BY-NC-SA",
   "private": true,
   "scripts": {
