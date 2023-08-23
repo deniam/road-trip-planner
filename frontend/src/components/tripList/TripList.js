@@ -37,7 +37,7 @@ const TripList = () => {
         
 
     return (
-        <Container maxWidth="md" sx={{ py: 3, display: 'flex', 
+        <Container className="myTrips" maxWidth="md" sx={{ py: 3, display: 'flex', 
         flexDirection: 'column', 
         alignItems: 'center',
         height: 'min-content' }}>
