@@ -11,6 +11,7 @@ describe("Signing in", () => {
     cy.get("#password").type("12345678");
     cy.get("#submit").click();
 
+
     cy.wait(500).then(() => {
       cy.url().should("include", "/planner");
     })

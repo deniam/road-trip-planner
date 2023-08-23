@@ -1,0 +1,29 @@
+button {
+    margin-bottom: 25px;
+}
+
+.Attraction {
+    width: 300px;
+    background-color: #fff; 
+    border: 2px solid #ccc;
+    padding: 5px !important;
+}
+
+.Attraction.clicked {
+background-color: #e3f2fd;
+border-color: #0086f3;
+border: 2px solid
+}
+
+.Attraction:disabled {
+    background-color: #0099ff;
+    border-color: #565656;
+    border: 2px solid;
+    color: rgb(255, 255, 255);
+    }
+
+@media (max-width: 600px) {
+.Attraction {
+    width: 100%;
+}
+}
