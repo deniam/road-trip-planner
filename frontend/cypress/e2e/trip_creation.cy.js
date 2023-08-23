@@ -7,6 +7,7 @@ describe("creating and then viewing a trip", () => {
 
     it("login for valid trip with 3 valid waypoints", () => {
         cy.signup("user@email.com", "12345678", "username");
+        cy.get("#logoutbutton").click()
         cy.login("user@email.com", "12345678");
         cy.url().should("contain", "/planner").then(() => {
             //should start with form to input journey info
