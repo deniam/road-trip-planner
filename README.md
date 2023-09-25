@@ -2,6 +2,9 @@
 ## Card wall
 https://trello.com/b/jioMjcB9/road-trip-planner
 
+## Presentation
+
+https://docs.google.com/presentation/d/15WlLvL49klRcENoWFSHBNTN_QPx7arvZm_AL7dRGXdk/edit#slide=id.g2775061940b_0_1
 
 ## Quickstart
 
